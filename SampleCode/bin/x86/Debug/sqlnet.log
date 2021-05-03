@@ -1,0 +1,70 @@
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.7)(PORT=1521)))(CONNECT_DATA=(SID=oramj)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:16:45
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.7)(PORT=1521)))(CONNECT_DATA=(SID=oramj)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:17:19
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.13)(PORT=1521)))(CONNECT_DATA=(SID=oramj)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:18:38
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.13)(PORT=1521)))(CONNECT_DATA=(SID=ORAMJ)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:19:41
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.13)(PORT=1521)))(CONNECT_DATA=(SID=ORAMJ)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:20:21
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.13)(PORT=1521)))(CONNECT_DATA=(SID=ORAMJ)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:24:22
+  Tracing not turned on.
+
+
+***********************************************************************
+Fatal NI connect error 6413, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=61.81.162.13)(PORT=1521)))(CONNECT_DATA=(SID=ORAMJ)(CID=(PROGRAM=D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe)(HOST=DESKTOP-S64A9QQ)(USER=Administrator))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 9.2.0.1.0 - Production
+  Time: 28-APR-2021 14:25:55
+  Tracing not turned on.

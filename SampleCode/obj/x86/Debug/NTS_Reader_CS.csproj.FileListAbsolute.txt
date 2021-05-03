@@ -1,0 +1,28 @@
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.pdb
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.NTS_Reader.resources
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.Properties.Resources.resources
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.csproj.GenerateResource.Cache
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.exe
+D:\EDOC\@Project\20140923_국세청\5가지 언어 샘플\sample\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.pdb
+D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe
+D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.pdb
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.csprojAssemblyReference.cache
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.NTS_Reader.resources
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.Properties.Resources.resources
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.csproj.GenerateResource.cache
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.csproj.CoreCompileInputs.cache
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.exe
+D:\workspace\sample_code\SampleCode(C#)\obj\x86\Debug\NTS_Reader_CS.pdb
+D:\workspace\sample_code\SampleCode(C#)\bin\x86\Debug\NTS_Reader_CS.exe.config
+D:\workspace\sample_code\SampleCode\bin\x86\Debug\NTS_Reader_CS.exe.config
+D:\workspace\sample_code\SampleCode\bin\x86\Debug\NTS_Reader_CS.exe
+D:\workspace\sample_code\SampleCode\bin\x86\Debug\NTS_Reader_CS.pdb
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.csprojAssemblyReference.cache
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.NTS_Reader.resources
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.Properties.Resources.resources
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.csproj.GenerateResource.cache
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.csproj.CoreCompileInputs.cache
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.exe
+D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.pdb
