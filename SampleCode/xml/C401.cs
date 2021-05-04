@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NTS_Reader_CS.db;
 
 namespace NTS_Reader_CS.xml
 {
