@@ -29,6 +29,49 @@ namespace NTS_Reader_CS.db
             return true;
         }
 
+
+        public Dictionary<string, object> ReadSql(string sql)
+        {
+
+            Dictionary<string, object> resultMap = new Dictionary<string, object>();
+            OracleDataReader dr = null;
+
+            //재시작 문자 발송
+            try
+            {
+                conn.Open();
+
+                using (OracleCommand cmd = new OracleCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+
+                    dr = cmd.ExecuteReader();                    
+                }
+
+                while (dr.Read())
+                {
+                    for(int lp = 0; lp < dr.FieldCount; lp++)
+                    {
+                        resultMap.Add(dr.GetName(lp), dr.GetValue(lp));
+                    }
+                    
+                }
+                    
+            }
+            catch (Exception ex) // catches any other error
+            {
+
+            }
+            finally
+            {
+                // Don't need conn.Close() because the using takes care of it.
+                conn.Close();
+            }
+            return resultMap;
+        }
+
         //쿼리 실행
         public void executeSql(String sql)
         {          
