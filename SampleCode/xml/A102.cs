@@ -111,12 +111,30 @@ namespace NTS_Reader_CS.xml
                         ");
 
             }
+            else
+            {
+                //전체 합계금액 수정
+                executeSql($@"                                      
+                                     UPDATE QE020MS
+                                       SET YCAL_SPCD_1_GINS_1_AMT = 0
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
+                        ");
+            }
             if (장애인보장성_전체합계 > 0)
             {
                 //전체 합계금액 수정
                 executeSql($@"                                      
                                      UPDATE QE020MS
                                        SET YCAL_SPCD_1_GINS_OBS_AMT = {장애인보장성_전체합계}
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
+                        ");
+            }
+            else
+            {
+                //전체 합계금액 수정
+                executeSql($@"                                      
+                                     UPDATE QE020MS
+                                       SET YCAL_SPCD_1_GINS_OBS_AMT = 0
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                         ");
             }
