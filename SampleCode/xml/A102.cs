@@ -80,7 +80,7 @@ namespace NTS_Reader_CS.xml
                         executeSql($@"                                      
                                      UPDATE QE023DT
                                        SET YCAL_INSU_AMT = {보장성_개인별합계}
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                    
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI={인별.resid}                 
                         ");
                         
                     }
@@ -90,7 +90,7 @@ namespace NTS_Reader_CS.xml
                         executeSql($@"                                      
                                      UPDATE QE023DT
                                        SET YCAL_INSU_21_AMT = {장애인보장성_개인별합계}
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                   
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI={인별.resid}                                   
                         ");
                     }                
                 }
@@ -105,7 +105,7 @@ namespace NTS_Reader_CS.xml
                 executeSql($@"                                      
                                      UPDATE QE020MS
                                        SET YCAL_SPCD_1_GINS_1_AMT = {보장성_전체합계}
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                     
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
 
             }
@@ -115,7 +115,7 @@ namespace NTS_Reader_CS.xml
                 executeSql($@"                                      
                                      UPDATE QE020MS
                                        SET YCAL_SPCD_1_GINS_OBS_AMT = {장애인보장성_전체합계}
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                     
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                         ");
             }
         }

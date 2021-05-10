@@ -29,7 +29,6 @@ D:\workspace\sample_code\SampleCode\obj\x86\Debug\NTS_Reader_CS.pdb
 D:\yesone\SampleCode\bin\x86\Debug\NTS_Reader_CS.exe.config
 D:\yesone\SampleCode\bin\x86\Debug\NTS_Reader_CS.exe
 D:\yesone\SampleCode\bin\x86\Debug\NTS_Reader_CS.pdb
-D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.csprojAssemblyReference.cache
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.NTS_Reader.resources
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.Properties.Resources.resources
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.csproj.GenerateResource.cache
