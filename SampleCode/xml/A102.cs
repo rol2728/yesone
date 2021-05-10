@@ -65,7 +65,9 @@ namespace NTS_Reader_CS.xml
 
             foreach (var 인별 in entity.인별)
             {
-                
+                보장성_개인별합계 = 0;
+                장애인보장성_개인별합계 = 0;
+
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
                 if(resultMap.Count > 0)
                 {
@@ -73,7 +75,7 @@ namespace NTS_Reader_CS.xml
                 }
 
                 foreach (var data in 인별.상품)
-                {
+                {  
                     if (data.dat_cd == "G0001")
                     {
                         보장성_개인별합계 += data.sum;                        
