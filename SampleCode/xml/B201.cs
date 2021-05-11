@@ -66,7 +66,7 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_MEDI_INSU_AMT = {개인별합계}
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                     ");
                   
                 }
