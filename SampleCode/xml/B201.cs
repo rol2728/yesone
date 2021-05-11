@@ -51,8 +51,7 @@ namespace NTS_Reader_CS.xml
 
             foreach (var 인별 in entity.인별)
             {
-                개인별합계 = 0;
-                개인별합계 = 0;
+                개인별합계 = 0;                
 
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
                 if (resultMap.Count > 0)
