@@ -63,7 +63,7 @@ namespace NTS_Reader_CS.xml
 
             foreach (var 인별 in entity.인별)
             {
-                //TEST
+                //TEST....
                 개인별합계 = 0;
 
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
