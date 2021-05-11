@@ -108,8 +108,7 @@ namespace NTS_Reader_CS.xml
                     //대학교
                     else if (data.edu_tp == "5" || data.edu_tp == "6")
                     {
-                        전체합계4 += 개인별합계;
-                        //본인
+                        전체합계4 += 개인별합계;                       
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC_AMT = {개인별합계}
@@ -120,8 +119,7 @@ namespace NTS_Reader_CS.xml
                     //장애
                     else if (data.edu_tp == "J" || data.edu_tp == "K")
                     {
-                        전체합계5 += 개인별합계;
-                        //본인
+                        전체합계5 += 개인별합계;                        
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC3_AMT = {개인별합계}
