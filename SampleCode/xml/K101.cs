@@ -73,25 +73,12 @@ namespace NTS_Reader_CS.xml
               
             }
 
-            if (소상공인_전체합계 > 0)
-            {
-                //전체 합계금액 수정
-                executeSql($@"                                      
+            //전체 합계금액 수정
+            executeSql($@"                                      
                                      UPDATE QE020MS
                                        SET YCAL_NTXD_7_AMT = {소상공인_전체합계}
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
-
-            }
-            else
-            {
-                //전체 합계금액 수정
-                executeSql($@"                                      
-                                     UPDATE QE020MS
-                                       SET YCAL_NTXD_7_AMT = 0
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
-                        ");
-            }
             
         }
 
