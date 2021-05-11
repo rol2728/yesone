@@ -1404,31 +1404,19 @@ namespace NTS_Reader_CS
                 conn.ConnectionDB("61.81.162.13", "ORAMJ", "MJUSER", "MJUSER");
                 
                 a102.Execute(a102);
-                b101.Execute(b101);
-                b201.Execute(b201); 
-                c102.Execute(c102);
-                c202.Execute(c202);
-                c301.Execute(c301);
-                c401.Execute(c401);
+                b101.Execute(b101);b201.Execute(b201); 
+                c102.Execute(c102);c202.Execute(c202);c301.Execute(c301);c401.Execute(c401);
                 d101.Execute(d101);
                 e102.Execute(e102);
                 f102.Execute(f102);
-                g108.Execute(g108);
-                g208.Execute(g208);
-                g308.Execute(g308);
-                g408.Execute(g408);
-                j101.Execute(j101);
-                j203.Execute(j203);
-                j301.Execute(j301);
-                j401.Execute(j401);
-                j501.Execute(j501);
+                g108.Execute(g108);g208.Execute(g208);g308.Execute(g308);g408.Execute(g408);
+                j101.Execute(j101);j203.Execute(j203);j301.Execute(j301);j401.Execute(j401);j501.Execute(j501);
                 k101.Execute(k101);
                 l102.Execute(l102);
                 n101.Execute(n101);
                 o101.Execute(o101);
                 p102.Execute(p102);
-                q101.Execute(q101);
-                q201.Execute(q201);
+                q101.Execute(q101);q201.Execute(q201);
 
 
             }
