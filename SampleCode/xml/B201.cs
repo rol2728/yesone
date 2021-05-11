@@ -39,8 +39,51 @@ namespace NTS_Reader_CS.xml
             public string mm { get; set; } //수령월
         }
 
-        
+        public void Execute(B201 entity)
+        {
+            int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+            calYear = 2021; //테스트 년도
 
-      
+            string emp_no = ""; ;
+
+            int 개인별합계 = 0;
+            int 전체합계 = 0;
+
+            foreach (var 인별 in entity.인별)
+            {
+                개인별합계 = 0;
+                개인별합계 = 0;
+
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+
+                foreach (var data in 인별.상품)
+                {
+                    개인별합계 += data.sum;
+                    
+                    executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_6_MEDI_INSU_AMT = {개인별합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
+                    ");
+                  
+                }
+                전체합계 += 개인별합계;              
+
+            }
+
+            //전체 합계금액 수정
+            executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_6_MEDI_INSU_AMT = {전체합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
+                    ");
+            
+        }
+
+
     }
 }
