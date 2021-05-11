@@ -1405,6 +1405,7 @@ namespace NTS_Reader_CS
 
                 
                 a102.Execute(a102);
+                k101.Execute(k101);
 
 
             }
