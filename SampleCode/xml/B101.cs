@@ -58,7 +58,9 @@ namespace NTS_Reader_CS.xml
 
             foreach (var 인별 in entity.인별)
             {
+                개인별합계 = 0;
                 시퀀스 += 1;
+
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}'");
                 string ycal_rera = resultMap["YCAL_RERA"].ToString(); //인적구분
                 string ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
@@ -76,8 +78,7 @@ namespace NTS_Reader_CS.xml
                                            VALUES({시퀀스},{data.busnid}, {data.trade_nm}, '1', {data.sum}, 1, , {ycal_rera}, {인별.resid}, {ycal_obst}, {난임여부})
                               ");
                 }
-
-                개인별합계 = 0;
+                
                 전체합계 += 개인별합계;
                 
           
