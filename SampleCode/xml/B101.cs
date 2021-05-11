@@ -85,7 +85,7 @@ namespace NTS_Reader_CS.xml
 
                     executeSql($@"                                      
                                     INSERT INTO QE021MS(YCAL_YEAR, EMP_NO, SEQ_NO,  PROV_RENO, PROV_NAME, PROV_MEDI_CODE, PROV_PAYM, PROV_COUN, FAMI_RERA, FAMI_RESI, HAND_OLD, PROV_BABY_YN, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', '{인별.resid}', '{ycal_obst}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{ycal_obst}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
                               ");
                 }
 
@@ -104,7 +104,7 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_SPCD_2_OLD_AMT = {전체합계}
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
                 else if (resultMap["YCAL_OBST"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
@@ -117,7 +117,7 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_SPCD_2_OLD_AMT = {전체합계}
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
                 else
@@ -130,7 +130,7 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_SPCD_2_NORM_AMT = {전체합계}
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
 
