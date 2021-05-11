@@ -61,10 +61,20 @@ namespace NTS_Reader_CS.xml
                 개인별합계 = 0;
                 시퀀스 += 1;
 
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}'");
-                string ycal_rera = resultMap["YCAL_RERA"].ToString(); //인적구분
-                string ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
-                string ycal_old_yn = resultMap["YCAL_OLD_YN"].ToString() == "1" ? "B" : ""; //경로우대
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
+
+
+                string ycal_rera = "";
+                string ycal_obst = "";
+                string ycal_old_yn = "";
+
+                if (resultMap.Count > 0)
+                {
+                    ycal_rera = resultMap["YCAL_RERA"].ToString(); //인적구분
+                    ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
+                    ycal_old_yn = resultMap["YCAL_OLD_YN"].ToString() == "1" ? "B" : ""; //경로우대
+                }
+         
 
                 foreach (var data in 인별.기관)
                 {
@@ -97,7 +107,7 @@ namespace NTS_Reader_CS.xml
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
                          ");
                 }
-                else if (resultMap["YCAL_OBST_YN"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
+                else if (resultMap["YCAL_OBST"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
                 {
                     executeSql($@"                                      
                                     UPDATE QE023DT
