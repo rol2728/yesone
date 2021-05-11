@@ -60,6 +60,27 @@ namespace NTS_Reader_CS.xml
             public string mm { get; set; } //공제대상월  
         }
 
-        
+        public void Execute(G408 entity)
+        {
+            // 1. 본인확인
+            foreach (var 인별 in entity.인별)
+            {
+                if (인별.resid == "test")
+                {
+                    string tes = "Test";
+                }
+
+
+            }
+
+            // 2.0 본인인 경우 
+            // 2.1 본인이 아니며 초중고 EDU_TIP = 2,3,4 인경우            
+            // 2.1 본인이 아니며 대학교 EDU_TIP = 5,6 인경우
+            // 2.1 본인이 아니며 취학전 EDU_TIP = 1 인경우
+            // 2.1 본인이 아니며 장애 EDU_TIP = J,K 인경우
+
+
+            executeSql("update qe020ms set YCAL_FORG_SMPL_RATE_YN = 'Y' where emp_no = '10110007' and ycal_year = '2020'");
+        }
     }
 }
