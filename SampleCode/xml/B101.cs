@@ -42,7 +42,9 @@ namespace NTS_Reader_CS.xml
             string emp_no = ""; ;
 
             int 개인별합계 = 0;
-            int 전체합계 = 0;
+            int 전체합계1 = 0; //(본인, 65세, 장애인)
+            int 전체합계2 = 0; //난임
+            int 전체합계3 = 0; //그밖대상자
             int 시퀀스 = 0;
 
 
@@ -92,12 +94,10 @@ namespace NTS_Reader_CS.xml
                               ");
                 }
 
-                전체합계 += 개인별합계;
-
 
                 if (resultMap["YCAL_RERA"].ToString() == "0")
                 {
-
+                    전체합계1 += 개인별합계;
 
                     executeSql($@"                                      
                                     UPDATE QE023DT
@@ -106,12 +106,13 @@ namespace NTS_Reader_CS.xml
                          ");
                     executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계}
+                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계1}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
                 else if (resultMap["YCAL_OBST"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
                 {
+                    전체합계1 += 개인별합계;
                     executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_MEDI_OBST_AMT = {개인별합계}
@@ -119,12 +120,13 @@ namespace NTS_Reader_CS.xml
                          ");
                     executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계}
+                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계1}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
                 else
                 {
+                    전체합계3 += 개인별합계;
                     executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_MEDI_AMT = {개인별합계}
@@ -132,7 +134,7 @@ namespace NTS_Reader_CS.xml
                          ");
                     executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_2_NORM_AMT = {전체합계}
+                                    SET YCAL_SPCD_2_NORM_AMT = {전체합계3}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                 }
