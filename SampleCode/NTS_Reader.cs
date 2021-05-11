@@ -1402,13 +1402,12 @@ namespace NTS_Reader_CS
 
                 Dbconn conn = new Dbconn();
                 conn.ConnectionDB("61.81.162.13", "ORAMJ", "MJUSER", "MJUSER");
-
                 
                 a102.Execute(a102);
                 b101.Execute(b101);
                 b201.Execute(b201); 
                 c102.Execute(c102);
-                c202.Execute(c202); ;
+                c202.Execute(c202);
                 c301.Execute(c301);
                 c401.Execute(c401);
                 d101.Execute(d101);
