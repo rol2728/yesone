@@ -55,11 +55,13 @@ namespace NTS_Reader_CS.xml
                 }
             }
 
+            //의료비 상세내역 삭제 및 초기화
+            executeSql($@" DELETE FROM QE021MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and PROV_MEDI_CODE = '1' ");
+
 
             foreach (var 인별 in entity.인별)
             {
                 개인별합계 = 0;
-                시퀀스 += 1;
 
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
 
@@ -78,6 +80,7 @@ namespace NTS_Reader_CS.xml
 
                 foreach (var data in 인별.기관)
                 {
+                    시퀀스 += 1;
                     개인별합계 += data.sum;
                     string 난임여부 = data.dat_cd == "G0034" ? "Y" : "N";
 
