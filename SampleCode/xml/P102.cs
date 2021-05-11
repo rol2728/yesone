@@ -40,18 +40,7 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(P102 entity)
         {
-            // 1. 본인확인
-            foreach (var 인별 in entity.인별)
-            {
-                if (인별.resid == "test")
-                {
-                    string tes = "Test";
-                }
-
-
-            }
-
-         
+           
         }
     }
 }

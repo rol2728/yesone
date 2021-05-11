@@ -64,8 +64,8 @@ namespace NTS_Reader_CS.xml
                     개인별합계 += data.sum;
                     
                     executeSql($@"                                      
-                                    UPDATE QE020MS
-                                    SET YCAL_SPCD_6_MEDI_INSU_AMT = {개인별합계}
+                                    UPDATE QE023DT
+                                    SET YCAL_MEDI_INSU_AMT = {개인별합계}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                     ");
                   
