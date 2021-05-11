@@ -82,7 +82,7 @@ namespace NTS_Reader_CS.xml
                     {
                         전체합계2 += 개인별합계;
                     }
-                    //초중구
+                    //초중고
                     else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4" )
                     {
                         전체합계3 += 개인별합계;
