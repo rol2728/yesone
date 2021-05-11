@@ -54,7 +54,6 @@ namespace NTS_Reader_CS.xml
             // 2.1 본인이 아니며 장애 EDU_TIP = J,K 인경우
 
 
-            executeSql("update qe020ms set YCAL_FORG_SMPL_RATE_YN = 'Y' where emp_no = '10110007' and ycal_year = '2020'");
         }
 
 
