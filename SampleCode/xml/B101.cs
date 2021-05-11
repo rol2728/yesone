@@ -34,75 +34,100 @@ namespace NTS_Reader_CS.xml
         }
 
 
-        //public void Execute(B101 entity)
-        //{
-        //    int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-        //    calYear = 2021; //테스트 년도
+        public void Execute(B101 entity)
+        {
+            int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+            calYear = 2021; //테스트 년도
 
-        //    string emp_no = ""; ;
+            string emp_no = ""; ;
 
-        //    int 보장성_개인별합계 = 0;
-        //    int 보장성_전체합계 = 0;
-        //    int 장애인보장성_개인별합계 = 0;
-        //    int 장애인보장성_전체합계 = 0;
+            int 개인별합계 = 0;
+            int 전체합계 = 0;
+            int 시퀀스 = 0;
 
 
-        //    foreach (var 인별 in entity.인별)
-        //    {
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
 
-        //        Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-        //        if (resultMap.Count > 0)
-        //        {
-        //            emp_no = resultMap["EMP_NO"].ToString(); //사번
-        //        }
 
-        //        foreach (var data in 인별.상품)
-        //        {
-        //            if (data.dat_cd == "G0001")
-        //            {
-        //                보장성_개인별합계 += data.sum;
-        //                executeSql($@"                                      
-        //                             UPDATE QE023DT
-        //                               SET YCAL_INSU_AMT = {보장성_개인별합계}
-        //                             WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                    
-        //                ");
+            foreach (var 인별 in entity.인별)
+            {
+                개인별합계 = 0;
+                시퀀스 += 1;
 
-        //            }
-        //            else if (data.dat_cd == "G0002")
-        //            {
-        //                장애인보장성_개인별합계 += data.sum;
-        //                executeSql($@"                                      
-        //                             UPDATE QE023DT
-        //                               SET YCAL_INSU_21_AMT = {장애인보장성_개인별합계}
-        //                             WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                   
-        //                ");
-        //            }
-        //        }
-        //        보장성_전체합계 += 보장성_개인별합계;
-        //        장애인보장성_전체합계 += 장애인보장성_개인별합계;
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}'");
+                string ycal_rera = resultMap["YCAL_RERA"].ToString(); //인적구분
+                string ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
+                string ycal_old_yn = resultMap["YCAL_OLD_YN"].ToString() == "1" ? "B" : ""; //경로우대
 
-        //    }
+                foreach (var data in 인별.기관)
+                {
+                    개인별합계 += data.sum;
+                    string 난임여부 = data.dat_cd == "G0034" ? "Y" : "N";
 
-        //    if (보장성_전체합계 > 0)
-        //    {
-        //        //전체 합계금액 수정
-        //        executeSql($@"                                      
-        //                             UPDATE QE020MS
-        //                               SET YCAL_SPCD_1_GINS_1_AMT = {보장성_전체합계}
-        //                             WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                     
-        //                ");
+                    //의료비 테이블 입력 (QE021MS)
 
-        //    }
-        //    if (장애인보장성_전체합계 > 0)
-        //    {
-        //        //전체 합계금액 수정
-        //        executeSql($@"                                      
-        //                             UPDATE QE020MS
-        //                               SET YCAL_SPCD_1_GINS_OBS_AMT = {장애인보장성_전체합계}
-        //                             WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                     
-        //                ");
-        //    }
-        //}
+                    executeSql($@"                                      
+                                    INSERT INTO QE021MS(SEQ_NO, PROV_RENO, PROV_NAME, PROV_CODE, PAYM, PROV_COUN, FAMI_RERA, FAMI_RESI, HAND_OLD, PROV_BABY_YN)
+                                           VALUES({시퀀스},{data.busnid}, {data.trade_nm}, '1', {data.sum}, 1, , {ycal_rera}, {인별.resid}, {ycal_obst}, {난임여부})
+                              ");
+                }
+
+                전체합계 += 개인별합계;
+
+
+                if (resultMap["YCAL_RERA"].ToString() == "0")
+                {
+
+
+                    executeSql($@"                                      
+                                    UPDATE QE023DT
+                                    SET YCAL_MEDI_AMT = {개인별합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                  
+                         ");
+                    executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                         ");
+                }
+                else if (resultMap["YCAL_OBST_YN"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
+                {
+                    executeSql($@"                                      
+                                    UPDATE QE023DT
+                                    SET YCAL_MEDI_OBST_AMT = {개인별합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                  
+                         ");
+                    executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_2_OLD_AMT = {전체합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                         ");
+                }
+                else
+                {
+                    executeSql($@"                                      
+                                    UPDATE QE023DT
+                                    SET YCAL_MEDI_AMT = {개인별합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                  
+                         ");
+                    executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_2_NORM_AMT = {전체합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear})                  
+                         ");
+                }
+
+            }
+
+        }
+
 
 
     }
