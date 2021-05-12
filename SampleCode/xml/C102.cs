@@ -84,7 +84,7 @@ namespace NTS_Reader_CS.xml
                          ");
                     }
                     //취학전
-                    else if (data.edu_tp == "1")
+                    else if (data.edu_tp == "1" || data.edu_tp == "F")
                     {
                         전체합계2 += 개인별합계;                       
                         executeSql($@"                                      
@@ -95,7 +95,7 @@ namespace NTS_Reader_CS.xml
                          ");
                     }
                     //초중고
-                    else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4" )
+                    else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4")
                     {
                         전체합계3 += 개인별합계;                       
                         executeSql($@"                                      
@@ -117,7 +117,7 @@ namespace NTS_Reader_CS.xml
                          ");
                     }
                     //장애
-                    else if (data.edu_tp == "J" || data.edu_tp == "K")
+                    else if (data.edu_tp == "J" || data.edu_tp == "K" || data.edu_tp == "H")
                     {
                         전체합계5 += 개인별합계;                        
                         executeSql($@"                                      
