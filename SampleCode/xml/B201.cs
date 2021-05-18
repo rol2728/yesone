@@ -44,7 +44,7 @@ namespace NTS_Reader_CS.xml
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
-            string emp_no = ""; ;
+            string emp_no = "";
 
             int 개인별합계 = 0;
             int 전체합계 = 0;
@@ -58,6 +58,7 @@ namespace NTS_Reader_CS.xml
                 {
                     emp_no = resultMap["EMP_NO"].ToString(); //사번
                 }
+            
 
                 foreach (var data in 인별.상품)
                 {
