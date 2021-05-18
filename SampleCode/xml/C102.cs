@@ -78,22 +78,23 @@ namespace NTS_Reader_CS.xml
                     if (resultMap["YCAL_RERA"].ToString() == "0")
                     {
                         개인별합계 += data.sum;
-                        전체합계1 += 개인별합계;                     
+                        전체합계1 += data.sum;
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC_AMT = {개인별합계}
                                        ,YCAL_EDUC_GUBUN=1
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                                                        
                          ");
+                      
                     }
                     //취학전
                     else if (data.edu_tp == "1" || data.edu_tp == "F")
                     {
                         개인별합계 += data.sum;
-                        전체합계2 += 개인별합계;                       
+                        전체합계2 += data.sum;                        
                         executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT =  {개인별합계}
                                        ,YCAL_EDUC_GUBUN=2
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                      
                          ");
@@ -102,7 +103,7 @@ namespace NTS_Reader_CS.xml
                     else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4")
                     {
                         개인별합계 += data.sum;
-                        전체합계3 += 개인별합계;                       
+                        전체합계3 += data.sum;//개인별합계;                       
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC_AMT = {개인별합계}
@@ -114,7 +115,7 @@ namespace NTS_Reader_CS.xml
                     else if (data.edu_tp == "5" || data.edu_tp == "6")
                     {
                         개인별합계 += data.sum;
-                        전체합계4 += 개인별합계;                       
+                        전체합계4 += data.sum;                        
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC_AMT = {개인별합계}
@@ -126,7 +127,7 @@ namespace NTS_Reader_CS.xml
                     else if (data.edu_tp == "J" || data.edu_tp == "K" || data.edu_tp == "H")
                     {
                         장애_개인별합계 += data.sum;
-                        전체합계5 += 장애_개인별합계;                        
+                        전체합계5 += data.sum;
                         executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_EDUC3_AMT = {장애_개인별합계}
