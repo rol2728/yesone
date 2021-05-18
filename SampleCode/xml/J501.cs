@@ -44,7 +44,46 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(J501 entity)
         {
-           
+            int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+            calYear = 2021; //테스트 년도
+
+            string emp_no = ""; ;
+            int 전체합계 = 0;            
+            int 시퀀스 = 1;    
+
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
+
+
+            foreach (var 인별 in entity.인별)
+            {
+
+                foreach (var data in 인별.상품)
+                {
+                    전체합계 += data.sum;
+
+                    //테이블 입력 (QE027MS)
+                    executeSql($@"                                      
+                                    INSERT INTO QE027MS(YCAL_YEAR, EMP_NO, SEQ_NO,  MONT_NAME , MONT_RESI_NO, MONT_ADDRESS, MONT_FROM_DATE, MONT_TO_DATE,HOUSE_TYPE, HOUSE_SPACE,MONT_AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', {data.end_dt}, '{data.typeCd}', '{data.area}',{data.sum},'{emp_no}', sysdate, '10.10.11.104')
+                               ");
+                }
+
+                시퀀스++;
+            }
+
+            //전체합계
+            executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_6_MONT_AMT = {전체합계}                                       
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
 
         }
     }

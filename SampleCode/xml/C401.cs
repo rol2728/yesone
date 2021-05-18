@@ -41,6 +41,10 @@ namespace NTS_Reader_CS.xml
 
             string emp_no = ""; ;
 
+            int 개인별합계 = 0;
+            int 본인_전체합계 = 0;            
+            int 본인외_전체합계 = 0;
+
             foreach (var 인별 in entity.인별)
             {
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
@@ -54,45 +58,54 @@ namespace NTS_Reader_CS.xml
             {
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
 
-                foreach (var data in 인별.기관)
-                {                    
 
-                    if (resultMap["YCAL_RERA"].ToString() == "0")  //본인인 경우
+                if (resultMap["YCAL_RERA"].ToString() == "0")  //본인인 경우
+                {
+                    foreach (var data in 인별.기관)
                     {
-                        //전체합계
-                        executeSql($@"                                      
-                                    UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SELF_AMT = YCAL_SPCD_3_SELF_AMT + {data.sum}                                       
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-                         ");
+                        개인별합계 += data.sum;
+                        본인_전체합계 += data.sum;
+                    }
 
-                        //개인별합계
-                        executeSql($@"                                      
+                    //개인별합계
+                    executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT + {data.sum}
+                                    SET YCAL_EDUC_AMT = {개인별합계}
                                        ,YCAL_EDUC_GUBUN = '1'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                          ");
-                    }
-                    else //본인 외
+                }
+                else //본인 외
+                {
+                    foreach (var data in 인별.기관)
                     {
-                        //전체합계
-                        executeSql($@"                                      
-                                    UPDATE QE020MS
-                                    SET YCAL_SPCD_3_UNIV_AMT = YCAL_SPCD_3_UNIV_AMT + {data.sum}                                       
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-                         ");
+                        개인별합계 += data.sum;
+                        본인외_전체합계 += data.sum;
+                    }
 
-                        //개인별합계
-                        executeSql($@"                                      
+                    //개인별합계
+                    executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT + {data.sum}
+                                    SET YCAL_EDUC_AMT = {개인별합계}
                                        ,YCAL_EDUC_GUBUN = '4'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                          ");
-                    }  
                 }
             }
+
+            //본인_전체합계
+            executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_3_SELF_AMT = {본인_전체합계}                                       
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                         ");
+
+            //본인외_전체합계
+            executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_3_UNIV_AMT = {본인외_전체합계}                                       
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                         ");
 
         }
     }

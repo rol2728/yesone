@@ -46,8 +46,10 @@ namespace NTS_Reader_CS.xml
             calYear = 2021; //테스트 년도
 
             string emp_no = ""; ;
-            int 시퀀스 = 0;
-
+            int 전체합계 = 0;
+            int 시퀀스 = 0;           
+            
+            
             foreach (var 인별 in entity.인별)
             {
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
@@ -56,30 +58,33 @@ namespace NTS_Reader_CS.xml
                     emp_no = resultMap["EMP_NO"].ToString(); //사번
                 }
             }
+           
 
             foreach (var 인별 in entity.인별)
             {                
 
                 foreach (var data in 인별.상품)
-                {   
-                    //전체합계
-                    executeSql($@"                                      
-                                UPDATE QE020MS
-                                SET YCAL_NTXD_1_AMT = YCAL_NTXD_1_AMT + {data.sum}                                       
-                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-                        ");
+                {
+                    전체합계 += data.sum;
 
                     Dictionary<string, object> resultMap = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),0) AS SEQ_NO FROM DUAL");
                     시퀀스 = Convert.ToInt32(resultMap["SEQ_NO"].ToString()); //사번                     
                    
 
-                    //의료비 테이블 입력 (QE024MS)
+                    //테이블 입력 (QE024MS)
                     executeSql($@"                                      
-                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_NAME, ACCO, AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{ycal_obst}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
-                              ");
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ACCO, AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '21', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                               ");
                 }
             }
+
+            //전체합계
+            executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_NTXD_1_AMT = {전체합계}                                       
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
 
         }
     }

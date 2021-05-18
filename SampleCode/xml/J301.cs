@@ -43,7 +43,91 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(J301 entity)
         {
-           
+            int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+            calYear = 2021; //테스트 년도
+
+            string emp_no = ""; ;
+             
+            Dictionary<string, object> resultMap1 = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),0) AS SEQ_NO FROM DUAL");
+            int 시퀀스 = Convert.ToInt32(resultMap1["SEQ_NO"].ToString()); //사번         
+
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
+
+            //전체합계컬럼 초기화
+            executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_1_1_AMT = 0        
+                                   ,YCAL_SPCD_4_1_2_AMT = 0        
+                                   ,YCAL_SPCD_4_1_3_AMT = 0                                                                           
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
+
+
+            foreach (var 인별 in entity.인별)
+            {
+
+                foreach (var data in 인별.상품)
+                {
+                    
+
+                    if (data.saving_gubn == "1")
+                    {
+                        //전체합계
+                        executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_2_AMT + {data.sum}                                                                                               
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
+
+
+                        //테이블 입력 (QE024MS)
+                        executeSql($@"                                      
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '31', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                               ");
+
+                    }
+                    else if (data.saving_gubn == "2")
+                    {
+                        //전체합계
+                        executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_1_AMT + {data.sum}                                                                                               
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
+
+                        //테이블 입력 (QE024MS)
+                        executeSql($@"                                      
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '32', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                               ");
+                    }
+                    else if (data.saving_gubn == "3")
+                    {
+                        //전체합계
+                        executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_3_AMT + {data.sum}                                                                                               
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                        ");
+
+                        //테이블 입력 (QE024MS)
+                        executeSql($@"                                      
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '34', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                               ");
+                    }
+
+                    시퀀스++;
+                }
+            }
 
         }
     }
