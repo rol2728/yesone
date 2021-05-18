@@ -43,7 +43,73 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(N101 entity)
         {
-           
+            int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+            calYear = 2021; //테스트 년도
+
+            string emp_no = ""; ;
+
+            int 장기집합투자증권저축_개별합계 = 0;
+            int 장기집합투자증권저축_전체합계 = 0;
+            int 시퀀스 = 0;
+
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
+
+            //장기집합투자증권 상세내역 삭제 및 초기화
+            executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and ANNU_RENO ='51' ");
+
+            //시퀀스 번호가져오기
+            Dictionary<string, object> resultMap2 = ReadSql($"select MAX(NVL(SEQ_NO,0))+1 AS SEQ_NO from QE024MS WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' GROUP BY EMP_NO ");
+            if (resultMap2.Count > 0)
+            {
+                시퀀스 = Convert.ToInt32(resultMap2["SEQ_NO"].ToString()); //시퀀스
+            }
+            else
+            {
+                시퀀스 = 1; //시퀀스
+            }
+           foreach (var 인별 in entity.인별)
+            {
+                //시퀀스 += 1;
+                장기집합투자증권저축_개별합계 = 0;
+                장기집합투자증권저축_전체합계 = 0;            
+
+                foreach (var data in 인별.상품)
+                {
+                    if (data.dat_cd == "G0029")
+                    {
+                        장기집합투자증권저축_전체합계 += data.ddct_bs_ass_amt;
+                   
+                        //연금저축 테이블 입력 (QE024MS)
+
+                        executeSql($@"                                      
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO, ANNU_RENO, ANNU_CODE,
+                                                        ANNU_NAME, ANNU_ACCO, ANNU_YEAR, ANNU_AMT, ANNU_DTRG_AMT, 
+                                                        U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스},'51', '{data.com_cd}',
+                                                  '{data.trade_nm}','{data.secu_no}','', {data.ddct_bs_ass_amt}, 0, '국세청', sysdate, '10.10.11.104')
+                              ");
+                      //  시퀀스 += 1;
+                    }
+                    시퀀스 += 1;
+                }
+                // 장기집합투자증권저축_전체합계 +=  장기집합투자증권저축;
+            }
+
+            //전체 합계금액 수정
+            executeSql($@"                                      
+                                     UPDATE QE020MS
+                                       SET YCAL_NTXD_10_AMT = {장기집합투자증권저축_전체합계}
+                                           , U_DATE =SYSDATE
+                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
+                        ");
+
 
         }
     }
