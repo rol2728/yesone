@@ -29,27 +29,41 @@
         private void InitializeComponent()
         {
             this.grpPdf = new System.Windows.Forms.GroupBox();
+            this.btnUtf8 = new System.Windows.Forms.Button();
             this.btnPdf = new System.Windows.Forms.Button();
             this.txtPdf = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnUtf8 = new System.Windows.Forms.Button();
             this.grpUtf8 = new System.Windows.Forms.GroupBox();
             this.txtUtf8 = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_empNo = new System.Windows.Forms.TextBox();
             this.grpPdf.SuspendLayout();
             this.grpUtf8.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpPdf
             // 
+            this.grpPdf.Controls.Add(this.tb_empNo);
+            this.grpPdf.Controls.Add(this.label2);
             this.grpPdf.Controls.Add(this.btnUtf8);
             this.grpPdf.Controls.Add(this.btnPdf);
             this.grpPdf.Controls.Add(this.txtPdf);
             this.grpPdf.Controls.Add(this.label1);
             this.grpPdf.Location = new System.Drawing.Point(12, 12);
             this.grpPdf.Name = "grpPdf";
-            this.grpPdf.Size = new System.Drawing.Size(818, 63);
+            this.grpPdf.Size = new System.Drawing.Size(818, 137);
             this.grpPdf.TabIndex = 0;
             this.grpPdf.TabStop = false;
+            // 
+            // btnUtf8
+            // 
+            this.btnUtf8.Location = new System.Drawing.Point(612, 14);
+            this.btnUtf8.Name = "btnUtf8";
+            this.btnUtf8.Size = new System.Drawing.Size(138, 37);
+            this.btnUtf8.TabIndex = 1;
+            this.btnUtf8.Text = "XML 읽기 (UTF-8)";
+            this.btnUtf8.UseVisualStyleBackColor = true;
+            this.btnUtf8.Click += new System.EventHandler(this.btnUtf8_Click);
             // 
             // btnPdf
             // 
@@ -77,22 +91,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "PDF 파일 : ";
             // 
-            // btnUtf8
-            // 
-            this.btnUtf8.Location = new System.Drawing.Point(612, 14);
-            this.btnUtf8.Name = "btnUtf8";
-            this.btnUtf8.Size = new System.Drawing.Size(138, 37);
-            this.btnUtf8.TabIndex = 1;
-            this.btnUtf8.Text = "XML 읽기 (UTF-8)";
-            this.btnUtf8.UseVisualStyleBackColor = true;
-            this.btnUtf8.Click += new System.EventHandler(this.btnUtf8_Click);
-            // 
             // grpUtf8
             // 
             this.grpUtf8.Controls.Add(this.txtUtf8);
-            this.grpUtf8.Location = new System.Drawing.Point(12, 81);
+            this.grpUtf8.Location = new System.Drawing.Point(12, 155);
             this.grpUtf8.Name = "grpUtf8";
-            this.grpUtf8.Size = new System.Drawing.Size(818, 423);
+            this.grpUtf8.Size = new System.Drawing.Size(818, 349);
             this.grpUtf8.TabIndex = 1;
             this.grpUtf8.TabStop = false;
             this.grpUtf8.Text = "XML (UTF-8)";
@@ -102,12 +106,30 @@
             this.txtUtf8.BackColor = System.Drawing.SystemColors.Window;
             this.txtUtf8.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtUtf8.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtUtf8.Location = new System.Drawing.Point(6, 20);
+            this.txtUtf8.Location = new System.Drawing.Point(6, 118);
             this.txtUtf8.Name = "txtUtf8";
             this.txtUtf8.ReadOnly = true;
-            this.txtUtf8.Size = new System.Drawing.Size(812, 397);
+            this.txtUtf8.Size = new System.Drawing.Size(812, 299);
             this.txtUtf8.TabIndex = 0;
             this.txtUtf8.Text = "";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 92);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "사번";
+            // 
+            // tb_empNo
+            // 
+            this.tb_empNo.Location = new System.Drawing.Point(100, 86);
+            this.tb_empNo.Name = "tb_empNo";
+            this.tb_empNo.ReadOnly = true;
+            this.tb_empNo.Size = new System.Drawing.Size(100, 21);
+            this.tb_empNo.TabIndex = 4;
+            this.tb_empNo.Text = "10110007";
             // 
             // NTS_Reader
             // 
@@ -137,6 +159,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUtf8;
         private System.Windows.Forms.RichTextBox txtUtf8;
+        private System.Windows.Forms.TextBox tb_empNo;
+        private System.Windows.Forms.Label label2;
     }
 }
 

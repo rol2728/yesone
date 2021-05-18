@@ -1402,6 +1402,14 @@ namespace NTS_Reader_CS
 
                 Dbconn conn = new Dbconn();
                 conn.ConnectionDB("61.81.162.13", "ORAMJ", "MJUSER", "MJUSER");
+
+                int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
+                calYear = 2021; //테스트 년도
+                //테이블 초기화
+
+                // 1. QE024MS
+                conn.executeSql($@"DELETE FROM QE024MS WHERE YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
+
                 
                 a102.Execute(a102);
                 b101.Execute(b101);b201.Execute(b201); 
