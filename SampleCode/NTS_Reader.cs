@@ -943,7 +943,7 @@ namespace NTS_Reader_CS
                                     j203.인별[ix].상품[j].mort_setup_dt = data.Element("mort_setup_dt").Value;
                                     j203.인별[ix].상품[j].start_dt = data.Element("start_dt").Value;
                                     j203.인별[ix].상품[j].end_dt = data.Element("end_dt").Value;
-                                    j203.인별[ix].상품[j].repay_years = data.Element("repay_years").Value;
+                                    j203.인별[ix].상품[j].repay_years = Int32.Parse(data.Element("repay_years").Value);
                                     j203.인별[ix].상품[j].lend_goods_nm = data.Element("lend_goods_nm").Value;
                                     j203.인별[ix].상품[j].debt = Int32.Parse(data.Element("debt").Value);
                                     j203.인별[ix].상품[j].fixed_rate_debt = Int32.Parse(data.Element("fixed_rate_debt").Value);
@@ -1405,12 +1405,14 @@ namespace NTS_Reader_CS
 
                 int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
                 calYear = 2021; //테스트 년도
-                //테이블 초기화
 
+                //테이블 초기화
                 // 1. QE024MS
                 conn.executeSql($@"DELETE FROM QE024MS WHERE YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
+                // 2. QE027MS (월세)
+                conn.executeSql($@"DELETE FROM QE027MS WHERE YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
 
-                
+
                 a102.Execute(a102);
                 b101.Execute(b101);b201.Execute(b201); 
                 c102.Execute(c102);c202.Execute(c202);c301.Execute(c301);c401.Execute(c401);

@@ -44,18 +44,12 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(J501 entity)
         {
-            if (entity.인별 == null)
-            {
-                return;
-            }
-
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
             string emp_no = ""; ;
-
-            int 월세_전체합계 = 0;
-            int 시퀀스 = 0;
+            int 전체합계 = 0;            
+            int 시퀀스 = 1;    
 
             foreach (var 인별 in entity.인별)
             {
@@ -66,50 +60,29 @@ namespace NTS_Reader_CS.xml
                 }
             }
 
-            //벤처기업투자신탁
-            executeSql($@" DELETE FROM QE027MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} ");
 
-            //시퀀스 번호가져오기
-            Dictionary<string, object> resultMap2 = ReadSql($"select MAX(NVL(SEQ_NO,0))+1 AS SEQ_NO from QE027MS WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' GROUP BY EMP_NO ");
-            if (resultMap2.Count > 0)
-            {
-                시퀀스 = Convert.ToInt32(resultMap2["SEQ_NO"].ToString()); //시퀀스
-            }
-            else
-            {
-                시퀀스 = 1; //시퀀스
-            }
             foreach (var 인별 in entity.인별)
             {
-                //   월세_전체합계 = 0;
 
                 foreach (var data in 인별.상품)
                 {
-                    if (data.dat_cd == "G0037" )
-                    {
-                        월세_전체합계 += data.sum;
+                    전체합계 += data.sum;
 
-                        //월세 테이블 입력 (QE027MS)
-                        executeSql($@"                                      
-                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO, MONT_NAME, MONT_RESI_NO,
-                                                        MONT_ADDRESS, MONT_FROM_DATE, MONT_TO_DATE, MONT_AMT,MONT_DAMT
-                                                        U_EMP_NO, U_DATE, U_IP, HOUSE_TYPE, HOUSE_SPACE)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, {data.lsor_nm},{data.lsor_no},{data.adr}
-                                                  {data.start_dt},{data.end_dt},{data.sum}, {data.sum}, 0, '국세청', sysdate, '10.10.11.104',{data.typeCd},{data.area}
-                              ");
-                        //  시퀀스 += 1;
-                    }
-                    시퀀스 += 1;
+                    //테이블 입력 (QE027MS)
+                    executeSql($@"                                      
+                                    INSERT INTO QE027MS(YCAL_YEAR, EMP_NO, SEQ_NO,  MONT_NAME , MONT_RESI_NO, MONT_ADDRESS, MONT_FROM_DATE, MONT_TO_DATE,HOUSE_TYPE, HOUSE_SPACE,MONT_AMT, U_EMP_NO, U_DATE, U_IP)
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', {data.end_dt}, '{data.typeCd}', '{data.area}',{data.sum},'{emp_no}', sysdate, '10.10.11.104')
+                               ");
                 }
 
+                시퀀스++;
             }
 
-            //전체 합계금액 수정
-                executeSql($@"                                      
-                                     UPDATE QE020MS
-                                       SET YCAL_SPCD_4_6_MONT_AMT = {월세_전체합계}
-                                           , U_DATE =SYSDATE
-                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
+            //전체합계
+            executeSql($@"                                      
+                                UPDATE QE020MS
+                                SET YCAL_SPCD_4_6_MONT_AMT = {전체합계}                                       
+                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
         }

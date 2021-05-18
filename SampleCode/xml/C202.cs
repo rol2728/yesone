@@ -43,7 +43,10 @@ namespace NTS_Reader_CS.xml
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
-            string emp_no = ""; ;
+            string emp_no = "";
+
+            int 개인별합계 = 0;
+            int 전체합계 = 0;
 
             foreach (var 인별 in entity.인별)
             {
@@ -54,26 +57,33 @@ namespace NTS_Reader_CS.xml
                 }
             }
 
+
             foreach (var 인별 in entity.인별)
-            {   
+            {
+                개인별합계 = 0;
+
                 foreach (var data in 인별.과정)
                 {
-                    //개인별 합계
-                    executeSql($@"                                      
+                    개인별합계 += data.sum;
+                    전체합계 += data.sum;
+                }
+
+
+                //개인별 합계
+                executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT + {data.sum}
+                                    SET YCAL_EDUC_AMT = {개인별합계}
                                        ,YCAL_EDUC_GUBUN = '1'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
-                    ");
-
-                    //전체 합계
-                    executeSql($@"                                      
-                                    UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SCH_AMT = YCAL_SPCD_3_SCH_AMT + {data.sum}
-                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
-                    ");
-                }
+                ");
             }
+
+            //전체 합계
+            executeSql($@"                                      
+                                    UPDATE QE020MS
+                                    SET YCAL_SPCD_3_SCH_AMT = {전체합계}
+                                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
+            ");
         }
     }
 }
