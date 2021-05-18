@@ -42,6 +42,11 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(D101 entity)
         {
+            if (entity.인별 == null)
+            {
+                return;
+            }
+
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 

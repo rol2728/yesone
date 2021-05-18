@@ -40,7 +40,10 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(P102 entity)
         {
-           
+            if (entity.인별 == null)
+            {
+                return;
+            }
         }
     }
 }

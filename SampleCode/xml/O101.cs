@@ -45,7 +45,10 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(O101 entity)
         {
-
+            if (entity.인별 == null)
+            {
+                return;
+            }
         }
     }
 }

@@ -62,7 +62,10 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(G308 entity)
         {
-          
+            if (entity.인별 == null)
+            {
+                return;
+            }
 
         }
     }
