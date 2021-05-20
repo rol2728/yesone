@@ -73,6 +73,12 @@
   <ItemGroup>
     <Compile Include="db\Dbconn.cs" />
     <Compile Include="EXPFile.cs" />
+    <Compile Include="LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NTS_Reader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     <Compile Include="xml\C102.cs" />
     <Compile Include="xml\B201.cs" />
     <Compile Include="xml\B101.cs" />
+    <EmbeddedResource Include="LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NTS_Reader.resx">
       <DependentUpon>NTS_Reader.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -159,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\upload1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
