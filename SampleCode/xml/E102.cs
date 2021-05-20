@@ -75,13 +75,13 @@ namespace NTS_Reader_CS.xml
                 {
                     전체합계 += data.ddct_bs_ass_amt;
 
-                    Dictionary<string, object> resultMap = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),0) AS SEQ_NO FROM DUAL");
+                    Dictionary<string, object> resultMap = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),1) AS SEQ_NO FROM DUAL");
                     시퀀스 = Convert.ToInt32(resultMap["SEQ_NO"].ToString()); //사번                     
 
 
                     //테이블 입력 (QE024MS)
                     executeSql($@"                                      
-                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ACCO, AMT, U_EMP_NO, U_DATE, U_IP)
+                                    INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
                                            VALUES('{calYear}', {emp_no},{시퀀스}, '22', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.ddct_bs_ass_amt}, '{emp_no}', sysdate, '10.10.11.104')
                                ");
                 }

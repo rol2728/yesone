@@ -53,9 +53,6 @@ namespace NTS_Reader_CS.xml
 
             string emp_no = ""; ;
              
-            Dictionary<string, object> resultMap1 = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),0) AS SEQ_NO FROM DUAL");
-            int 시퀀스 = Convert.ToInt32(resultMap1["SEQ_NO"].ToString()); //사번         
-
             foreach (var 인별 in entity.인별)
             {
                 Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
@@ -64,6 +61,9 @@ namespace NTS_Reader_CS.xml
                     emp_no = resultMap["EMP_NO"].ToString(); //사번
                 }
             }
+
+            Dictionary<string, object> resultMap1 = ReadSql($@" SELECT NVL((SELECT MAX(SEQ_NO) +1 FROM QE024MS WHERE YCAL_YEAR = '{calYear}' AND EMP_NO = '{emp_no}'),0) AS SEQ_NO FROM DUAL");
+            int 시퀀스 = Convert.ToInt32(resultMap1["SEQ_NO"].ToString()); //사번         
 
             //전체합계컬럼 초기화
             executeSql($@"                                      
@@ -104,7 +104,7 @@ namespace NTS_Reader_CS.xml
                         //전체합계
                         executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_1_AMT + {data.sum}                                                                                               
+                                SET YCAL_SPCD_4_1_1_AMT = YCAL_SPCD_4_1_1_AMT + {data.sum}                                                                                               
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
@@ -119,7 +119,7 @@ namespace NTS_Reader_CS.xml
                         //전체합계
                         executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_3_AMT + {data.sum}                                                                                               
+                                SET YCAL_SPCD_4_1_3_AMT = YCAL_SPCD_4_1_3_AMT + {data.sum}                                                                                               
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 

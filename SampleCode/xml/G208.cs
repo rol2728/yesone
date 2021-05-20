@@ -67,7 +67,16 @@ namespace NTS_Reader_CS.xml
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
-            string emp_no = ""; ;
+            string emp_no = ""; 
+
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
 
 
             //전체합계컬럼 초기화
@@ -85,9 +94,9 @@ namespace NTS_Reader_CS.xml
             //개인별컬럼 초기화
             executeSql($@"                                      
                                 UPDATE QE023DT
-                                SET YCAL_CARD_3M_AMT = 0
-                                   ,YCAL_CARD_7M_AMT = 0
-                                   ,YCAL_CARD_AMT = 0
+                                SET YCAL_CASH_3M_AMT = 0
+                                   ,YCAL_CASH_7M_AMT = 0
+                                   ,YCAL_CASH_AMT = 0
                                    ,YCAL_MART_3M_AMT = 0
                                    ,YCAL_MART_7M_AMT = 0
                                    ,YCAL_MART_AMT = 0                                   
@@ -99,16 +108,6 @@ namespace NTS_Reader_CS.xml
                                    ,YCAL_BOOK_AMT = 0       
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
-
-
-            foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
-                {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
 
 
             foreach (var 인별 in entity.인별)
@@ -129,9 +128,9 @@ namespace NTS_Reader_CS.xml
                 //개인별
                 executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_CARD_3M_AMT = YCAL_CARD_3M_AMT + {인별.gnrl_mar_sum}
-                                       ,YCAL_CARD_7M_AMT = YCAL_CARD_7M_AMT  + {인별.gnrl_aprl_sum}
-                                       ,YCAL_CARD_AMT = YCAL_CARD_AMT + {인별.gnrl_jan_sum} 
+                                    SET YCAL_CASH_3M_AMT = YCAL_CASH_3M_AMT + {인별.gnrl_mar_sum}
+                                       ,YCAL_CASH_7M_AMT = YCAL_CASH_7M_AMT  + {인별.gnrl_aprl_sum}
+                                       ,YCAL_CASH_AMT = YCAL_CASH_AMT + {인별.gnrl_jan_sum} 
                                        ,YCAL_MART_3M_AMT = YCAL_MART_3M_AMT + {인별.tdmr_mar_sum}
                                        ,YCAL_MART_7M_AMT = YCAL_MART_7M_AMT + {인별.tdmr_aprl_sum}
                                        ,YCAL_MART_AMT = YCAL_MART_AMT + {인별.tdmr_jan_sum}                                   

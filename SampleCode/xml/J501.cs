@@ -64,7 +64,7 @@ namespace NTS_Reader_CS.xml
                     emp_no = resultMap["EMP_NO"].ToString(); //사번
                 }
             }
-
+            
 
             foreach (var 인별 in entity.인별)
             {
@@ -76,11 +76,11 @@ namespace NTS_Reader_CS.xml
                     //테이블 입력 (QE027MS)
                     executeSql($@"                                      
                                     INSERT INTO QE027MS(YCAL_YEAR, EMP_NO, SEQ_NO,  MONT_NAME , MONT_RESI_NO, MONT_ADDRESS, MONT_FROM_DATE, MONT_TO_DATE,HOUSE_TYPE, HOUSE_SPACE,MONT_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', '{data.end_dt}', '{data.typeCd}', '{data.area}',{data.sum},'{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', '{data.end_dt}', substr('{data.typeCd}',2,1), '{data.area}',{data.sum},'{emp_no}', sysdate, '10.10.11.104')
                                ");
+                    시퀀스++;
                 }
 
-                시퀀스++;
             }
 
             //전체합계

@@ -71,7 +71,14 @@ namespace NTS_Reader_CS.xml
             calYear = 2021; //테스트 년도
 
             string emp_no = ""; ;
-
+            foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }
 
             //전체합계컬럼 초기화
             executeSql($@"                                      
@@ -105,16 +112,6 @@ namespace NTS_Reader_CS.xml
 
 
             foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
-                {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
-
-
-            foreach (var 인별 in entity.인별)
             {                                
                 //전체합계
                 executeSql($@"                                      
@@ -123,7 +120,7 @@ namespace NTS_Reader_CS.xml
                                        ,YCAL_NTXD_4_11_AMT = YCAL_NTXD_4_11_AMT + {인별.isld_mar_sum}
                                        ,YCAL_NTXD_4_12_AMT = YCAL_NTXD_4_12_AMT + {인별.isld_aprl_sum}
                                        ,YCAL_NTXD_4_8_AMT = YCAL_NTXD_4_8_AMT + {인별.isld_jan_sum}
-                                       ,YCAL_NTXD_4_6_AMT = YCAL_NTXD_4_6_AMT + {인별.tdmr_sum}
+                                      ,YCAL_NTXD_4_6_AMT = YCAL_NTXD_4_6_AMT + {인별.tdmr_sum}
                                        ,YCAL_NTXD_4_7_AMT = YCAL_NTXD_4_7_AMT + {인별.trp_sum}             
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");

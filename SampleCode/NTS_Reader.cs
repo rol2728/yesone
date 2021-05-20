@@ -1419,7 +1419,9 @@ namespace NTS_Reader_CS
                 d101.Execute(d101);
                 e102.Execute(e102);
                 f102.Execute(f102);
-                g108.Execute(g108);g208.Execute(g208);g308.Execute(g308);g408.Execute(g408);
+                g108.Execute(g108);
+                g208.Execute(g208);
+                //g308.Execute(g308);g408.Execute(g408);
                 j101.Execute(j101);j203.Execute(j203);j301.Execute(j301);j401.Execute(j401);j501.Execute(j501);
                 k101.Execute(k101);
                 l102.Execute(l102);
