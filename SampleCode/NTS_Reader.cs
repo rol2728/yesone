@@ -49,6 +49,17 @@ namespace NTS_Reader_CS
         public NTS_Reader()
         {
             InitializeComponent();
+
+            string[] strArg = Environment.GetCommandLineArgs();
+            if (strArg.Length > 1)
+            {
+                tb_empNo.Text = strArg[1];
+            }
+            else
+            {
+                tb_empNo.Text = "10110007";
+            }
+
         }
 
         private void btnPdf_Click(object sender, EventArgs e)
