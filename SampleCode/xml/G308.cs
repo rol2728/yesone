@@ -82,16 +82,16 @@ namespace NTS_Reader_CS.xml
 
 
             //전체합계컬럼 초기화
-            executeSql($@"                                      
-                                UPDATE QE020MS
-                                SET YCAL_NTXD_4_3_AMT = 0
-                                   ,YCAL_NTXD_4_13_AMT = 0
-                                   ,YCAL_NTXD_4_14_AMT = 0
-                                   ,YCAL_NTXD_4_9_AMT = 0
-                                   ,YCAL_NTXD_4_6_AMT = 0
-                                   ,YCAL_NTXD_4_7_AMT = 0                                   
-                                WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-                        ");
+         //   executeSql($@"                                      
+          //                      UPDATE QE020MS
+          //                      SET YCAL_NTXD_4_3_AMT = 0
+           //                        ,YCAL_NTXD_4_13_AMT = 0
+           //                        ,YCAL_NTXD_4_14_AMT = 0
+            //                       ,YCAL_NTXD_4_9_AMT = 0
+            //                       ,YCAL_NTXD_4_6_AMT = 0
+            //                       ,YCAL_NTXD_4_7_AMT = 0                                   
+            //                    WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+           //             ");
 
             //개인별컬럼 초기화
             executeSql($@"                                      

@@ -1422,7 +1422,23 @@ namespace NTS_Reader_CS
                 conn.executeSql($@"DELETE FROM QE024MS WHERE YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
                 // 2. QE027MS (월세)
                 conn.executeSql($@"DELETE FROM QE027MS WHERE YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
-
+                //신용카드 관련 금액 QE020MS 0으로 초기화
+                conn.executeSql($@"UPDATE QE020MS
+                                SET YCAL_NTXD_4_1_AMT = 0
+                                   ,YCAL_NTXD_4_11_AMT = 0
+                                   ,YCAL_NTXD_4_12_AMT = 0
+                                   ,YCAL_NTXD_4_8_AMT = 0
+                                   ,YCAL_NTXD_4_4_AMT = 0
+                                   ,YCAL_NTXD_4_15_AMT = 0
+                                   ,YCAL_NTXD_4_16_AMT = 0
+                                   ,YCAL_NTXD_4_10_AMT = 0
+                                   ,YCAL_NTXD_4_6_AMT = 0
+                                   ,YCAL_NTXD_4_7_AMT = 0
+                                   ,YCAL_NTXD_4_3_AMT = 0
+                                   ,YCAL_NTXD_4_13_AMT = 0
+                                   ,YCAL_NTXD_4_14_AMT = 0
+                                   ,YCAL_NTXD_4_9_AMT = 0
+                              WHERE  YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
 
                 a102.Execute(a102);
                 b101.Execute(b101);b201.Execute(b201); 
@@ -1433,7 +1449,7 @@ namespace NTS_Reader_CS
                 g108.Execute(g108);
                 g208.Execute(g208);
                 g308.Execute(g308);
-                //g408.Execute(g408);
+                g408.Execute(g408);
                 j101.Execute(j101);j203.Execute(j203);j301.Execute(j301);j401.Execute(j401);j501.Execute(j501);
                 k101.Execute(k101);
                 l102.Execute(l102);
