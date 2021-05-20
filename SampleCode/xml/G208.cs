@@ -96,16 +96,7 @@ namespace NTS_Reader_CS.xml
                                 UPDATE QE023DT
                                 SET YCAL_CASH_3M_AMT = 0
                                    ,YCAL_CASH_7M_AMT = 0
-                                   ,YCAL_CASH_AMT = 0
-                                   ,YCAL_MART_3M_AMT = 0
-                                   ,YCAL_MART_7M_AMT = 0
-                                   ,YCAL_MART_AMT = 0                                   
-                                   ,YCAL_TRAN_3M_AMT = 0       
-                                   ,YCAL_TRAN_7M_AMT = 0       
-                                   ,YCAL_TRAN_AMT = 0       
-                                   ,YCAL_BOOK_3M_AMT = 0       
-                                   ,YCAL_BOOK_7M_AMT = 0       
-                                   ,YCAL_BOOK_AMT = 0       
+                                   ,YCAL_CASH_AMT = 0 
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
@@ -116,9 +107,9 @@ namespace NTS_Reader_CS.xml
                 executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_NTXD_4_1_AMT = YCAL_NTXD_4_1_AMT + {인별.gnrl_sum}
-                                       ,YCAL_NTXD_4_11_AMT = YCAL_NTXD_4_11_AMT + {인별.isld_mar_sum}
-                                       ,YCAL_NTXD_4_12_AMT = YCAL_NTXD_4_12_AMT + {인별.isld_aprl_sum}
-                                       ,YCAL_NTXD_4_8_AMT = YCAL_NTXD_4_8_AMT + {인별.isld_jan_sum}
+                                       ,YCAL_NTXD_4_15_AMT = YCAL_NTXD_4_15_AMT + {인별.isld_mar_sum}
+                                       ,YCAL_NTXD_4_16_AMT = YCAL_NTXD_4_16_AMT + {인별.isld_aprl_sum}
+                                       ,YCAL_NTXD_4_10_AMT = YCAL_NTXD_4_10_AMT + {인별.isld_jan_sum}
                                        ,YCAL_NTXD_4_6_AMT = YCAL_NTXD_4_6_AMT + {인별.tdmr_sum}
                                        ,YCAL_NTXD_4_7_AMT = YCAL_NTXD_4_7_AMT + {인별.trp_sum}             
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
