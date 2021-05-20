@@ -37,12 +37,14 @@
             this.txtUtf8 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnUtf8 = new System.Windows.Forms.Button();
+            this.lb_결과 = new System.Windows.Forms.Label();
             this.grpPdf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // grpPdf
             // 
+            this.grpPdf.Controls.Add(this.lb_결과);
             this.grpPdf.Controls.Add(this.tb_empNo);
             this.grpPdf.Controls.Add(this.label2);
             this.grpPdf.Controls.Add(this.btnUtf8);
@@ -133,6 +135,15 @@
             this.btnUtf8.UseVisualStyleBackColor = true;
             this.btnUtf8.Click += new System.EventHandler(this.btnUtf8_Click);
             // 
+            // lb_결과
+            // 
+            this.lb_결과.AutoSize = true;
+            this.lb_결과.Location = new System.Drawing.Point(28, 125);
+            this.lb_결과.Name = "lb_결과";
+            this.lb_결과.Size = new System.Drawing.Size(53, 12);
+            this.lb_결과.TabIndex = 6;
+            this.lb_결과.Text = "결과문자";
+            // 
             // NTS_Reader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -165,6 +176,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RichTextBox txtUtf8;
+        private System.Windows.Forms.Label lb_결과;
     }
 }
 
