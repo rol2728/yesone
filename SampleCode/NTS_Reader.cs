@@ -1450,7 +1450,7 @@ namespace NTS_Reader_CS
                                    ,YCAL_NTXD_4_13_AMT = 0
                                    ,YCAL_NTXD_4_14_AMT = 0
                                    ,YCAL_NTXD_4_9_AMT = 0
-                              WHERE  YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}
+                              WHERE  YCAL_YEAR='{calYear}' AND EMP_NO = '{tb_empNo.Text}'");
                         try
                         {
                             a102.Execute(a102);
@@ -1461,7 +1461,8 @@ namespace NTS_Reader_CS
                             f102.Execute(f102);
                             g108.Execute(g108);
                             g208.Execute(g208);
-                            //g308.Execute(g308);g408.Execute(g408);
+                            g308.Execute(g308);
+                            g408.Execute(g408);
                             j101.Execute(j101); j203.Execute(j203); j301.Execute(j301); j401.Execute(j401); j501.Execute(j501);
                             k101.Execute(k101);
                             l102.Execute(l102);
@@ -1471,9 +1472,12 @@ namespace NTS_Reader_CS
                             q101.Execute(q101);
                             q201.Execute(q201);
 
-
-                            lb_결과.ForeColor = Color.Blue;
-                            lb_결과.Text = "★ 정상처리되었습니다.";
+                            this.Invoke(new Action(
+                            delegate ()
+                            {
+                               lb_결과.ForeColor = Color.Blue;
+                               lb_결과.Text = "★ 정상처리되었습니다.";
+                            }));
                         }
                         catch(Exception ex)
                         {

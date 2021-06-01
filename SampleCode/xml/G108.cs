@@ -62,6 +62,8 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(G108 entity)
         {
+            try
+            { 
             if (entity.인별 == null)
             {
                 return;
@@ -81,16 +83,16 @@ namespace NTS_Reader_CS.xml
             }
 
             //전체합계컬럼 초기화
-         //   executeSql($@"                                      
-          //                      UPDATE QE020MS
-          //                      SET YCAL_NTXD_4_1_AMT = 0
-           //                        ,YCAL_NTXD_4_11_AMT = 0
-           //                        ,YCAL_NTXD_4_12_AMT = 0
-           //                        ,YCAL_NTXD_4_8_AMT = 0
+            //   executeSql($@"                                      
+            //                      UPDATE QE020MS
+            //                      SET YCAL_NTXD_4_1_AMT = 0
+            //                        ,YCAL_NTXD_4_11_AMT = 0
+            //                        ,YCAL_NTXD_4_12_AMT = 0
+            //                        ,YCAL_NTXD_4_8_AMT = 0
             //                       ,YCAL_NTXD_4_6_AMT = 0
             //                       ,YCAL_NTXD_4_7_AMT = 0                                   
-           //                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-           //             ");
+            //                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+            //             ");
 
             //개인별컬럼 초기화
             executeSql($@"                                      
@@ -112,7 +114,7 @@ namespace NTS_Reader_CS.xml
 
 
             foreach (var 인별 in entity.인별)
-            {                                
+            {
                 //전체합계
                 executeSql($@"                                      
                                     UPDATE QE020MS
@@ -145,7 +147,12 @@ namespace NTS_Reader_CS.xml
                     ");
             }
 
-
         }
+      catch (Exception ex)
+            {
+                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+    }
+
+}
     }
 }

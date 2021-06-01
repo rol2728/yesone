@@ -45,9 +45,15 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(O101 entity)
         {
+          try { 
             if (entity.인별 == null)
             {
                 return;
+            }
+        }
+            catch (Exception ex)
+            {
+                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
             }
         }
     }

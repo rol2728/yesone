@@ -44,7 +44,9 @@ namespace NTS_Reader_CS.xml
         }
 
         public void Execute(L102 entity)
-        {
+        {  
+          try
+            { 
             if (entity.인별 == null)
             {
                 return;
@@ -221,7 +223,12 @@ namespace NTS_Reader_CS.xml
                                         YCAL_SPCD_5_POLI_AMT = {정치합계}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
-            
-       }
+
+        }
+     catch (Exception ex)
+            {
+                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+            }
+     }
     }
 }

@@ -41,6 +41,8 @@ namespace NTS_Reader_CS.xml
 
         public void Execute(K101 entity)
         {
+         try 
+          { 
             if (entity.인별 == null)
             {
                 return;
@@ -84,8 +86,13 @@ namespace NTS_Reader_CS.xml
                                        SET YCAL_NTXD_7_AMT = {소상공인_전체합계}
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
-            
-        }
 
+        }
+      catch (Exception ex)
+            {
+                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+             }
+
+       }
     }
 }
