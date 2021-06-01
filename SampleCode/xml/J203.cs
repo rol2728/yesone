@@ -195,7 +195,7 @@ namespace NTS_Reader_CS.xml
         }
       catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("장기주택저당차입금 이자상환액[J203] 처리 중 오류가 발생하였습니다.");
             }
 
        }

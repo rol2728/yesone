@@ -93,7 +93,7 @@ namespace NTS_Reader_CS.xml
             }
             catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("실손의료보험[B201] 처리 중 오류가 발생하였습니다.");
             }
 
         }

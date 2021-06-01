@@ -121,7 +121,7 @@ namespace NTS_Reader_CS.xml
         }
        catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("장기집합투자증권저축[N101] 처리 중 오류가 발생하였습니다.");
            }
         }
     }

@@ -49,7 +49,7 @@ namespace NTS_Reader_CS.xml
         }
             catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("국민연금보험료[P102] 처리 중 오류가 발생하였습니다.");
             }
         }
     }

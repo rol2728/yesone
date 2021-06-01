@@ -227,7 +227,7 @@ namespace NTS_Reader_CS.xml
         }
      catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("기부금[L102] 처리 중 오류가 발생하였습니다.");
             }
      }
     }

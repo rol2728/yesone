@@ -135,7 +135,7 @@ namespace NTS_Reader_CS.xml
         }
             catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("당해벤처기업투자신탁[Q101] 처리 중 오류가 발생하였습니다.");
             }
         }
     }

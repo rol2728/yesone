@@ -90,7 +90,7 @@ namespace NTS_Reader_CS.xml
         }
       catch (Exception ex)
             {
-                throw new Exception("B201 처리 중 오류가 발생하였습니다.");
+                throw new Exception("소기업소상공인 공제부금[K101] 처리 중 오류가 발생하였습니다.");
              }
 
        }
