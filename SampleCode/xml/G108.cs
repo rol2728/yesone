@@ -72,30 +72,31 @@ namespace NTS_Reader_CS.xml
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
-            string emp_no = ""; ;
-            foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
+            string emp_no = "";
+                /*foreach (var 인별 in entity.인별)
                 {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
+                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                    if (resultMap.Count > 0)
+                    {
+                        emp_no = resultMap["EMP_NO"].ToString(); //사번
+                    }
+                }*/
+             emp_no = NTS_Reader.emp_no;
 
-            //전체합계컬럼 초기화
-            //   executeSql($@"                                      
-            //                      UPDATE QE020MS
-            //                      SET YCAL_NTXD_4_1_AMT = 0
-            //                        ,YCAL_NTXD_4_11_AMT = 0
-            //                        ,YCAL_NTXD_4_12_AMT = 0
-            //                        ,YCAL_NTXD_4_8_AMT = 0
-            //                       ,YCAL_NTXD_4_6_AMT = 0
-            //                       ,YCAL_NTXD_4_7_AMT = 0                                   
-            //                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
-            //             ");
+                //전체합계컬럼 초기화
+                //   executeSql($@"                                      
+                //                      UPDATE QE020MS
+                //                      SET YCAL_NTXD_4_1_AMT = 0
+                //                        ,YCAL_NTXD_4_11_AMT = 0
+                //                        ,YCAL_NTXD_4_12_AMT = 0
+                //                        ,YCAL_NTXD_4_8_AMT = 0
+                //                       ,YCAL_NTXD_4_6_AMT = 0
+                //                       ,YCAL_NTXD_4_7_AMT = 0                                   
+                //                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
+                //             ");
 
-            //개인별컬럼 초기화
-            executeSql($@"                                      
+                //개인별컬럼 초기화
+                executeSql($@"                                      
                                 UPDATE QE023DT
                                 SET YCAL_CARD_3M_AMT = 0
                                    ,YCAL_CARD_7M_AMT = 0
@@ -115,8 +116,17 @@ namespace NTS_Reader_CS.xml
 
             foreach (var 인별 in entity.인별)
             {
-                //전체합계
-                executeSql($@"                                      
+                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
+                    if (resultMap.Count > 0)
+                    {
+                        emp_no = resultMap["EMP_NO"].ToString(); //사번
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    //전체합계
+                    executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_NTXD_4_1_AMT = YCAL_NTXD_4_1_AMT + {인별.gnrl_sum}
                                        ,YCAL_NTXD_4_11_AMT = YCAL_NTXD_4_11_AMT + {인별.isld_mar_sum}

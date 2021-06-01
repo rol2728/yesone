@@ -56,17 +56,17 @@ namespace NTS_Reader_CS.xml
             int 벤처기업투자신탁_전체합계 = 0;
             int 시퀀스 = 0;
 
-            foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
-                {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
-
-            //벤처기업투자신탁
-            executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and ANNU_RENO ='61' ");
+                /* foreach (var 인별 in entity.인별)
+                 {
+                     Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                     if (resultMap.Count > 0)
+                     {
+                         emp_no = resultMap["EMP_NO"].ToString(); //사번
+                     }
+                 }*/
+             emp_no = NTS_Reader.emp_no;
+                //벤처기업투자신탁
+              executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and ANNU_RENO ='61' ");
 
             //시퀀스 번호가져오기
             Dictionary<string, object> resultMap2 = ReadSql($"select MAX(NVL(SEQ_NO,0))+1 AS SEQ_NO from QE024MS WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' GROUP BY EMP_NO ");

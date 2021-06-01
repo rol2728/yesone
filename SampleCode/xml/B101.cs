@@ -64,6 +64,8 @@ namespace NTS_Reader_CS.xml
                     }
                 }
 
+                emp_no = NTS_Reader.emp_no;
+
                 //의료비 상세내역 삭제 및 초기화
                 executeSql($@" DELETE FROM QE021MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and PROV_MEDI_CODE = '1' ");
 
@@ -85,8 +87,11 @@ namespace NTS_Reader_CS.xml
                         ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
                         ycal_old_yn = resultMap["YCAL_OLD_YN"].ToString() == "1" ? "B" : ""; //경로우대
                     }
-
-
+                    else if (resultMap.Count==0)
+                    {
+                        continue;
+                    }
+  
                     foreach (var data in 인별.기관)
                     {
                         시퀀스 += 1;

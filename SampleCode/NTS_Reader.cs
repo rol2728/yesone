@@ -16,6 +16,8 @@ namespace NTS_Reader_CS
     public partial class NTS_Reader : Form
     {
 
+        public static string emp_no = "";
+
         /*---------------------  클래스 초기화 -----------------*/
 
         A102 a102 = new A102();
@@ -54,11 +56,15 @@ namespace NTS_Reader_CS
             if (strArg.Length > 1)
             {
                 tb_empNo.Text = strArg[1];
+                emp_no = strArg[1];
             }
             else
             {
-                tb_empNo.Text = "10110007";
+                tb_empNo.Text = "10110006";
+                emp_no = "10110006";
             }
+
+            
 
             lb_결과.Text = "";
 
@@ -1455,7 +1461,8 @@ namespace NTS_Reader_CS
                         {
                             a102.Execute(a102);
                             b101.Execute(b101); b201.Execute(b201);
-                            c102.Execute(c102); c202.Execute(c202); c301.Execute(c301); c401.Execute(c401);
+                            c102.Execute(c102);
+                            c202.Execute(c202); c301.Execute(c301); c401.Execute(c401);
                             d101.Execute(d101);
                             e102.Execute(e102);
                             f102.Execute(f102);

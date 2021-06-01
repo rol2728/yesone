@@ -80,6 +80,10 @@ namespace NTS_Reader_CS.xml
                     {
                         emp_no = resultMap["EMP_NO"].ToString(); //사번
                     }
+                    else
+                    {
+                        continue;
+                    }
 
                     foreach (var data in 인별.상품)
                     {

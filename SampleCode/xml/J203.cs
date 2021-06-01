@@ -61,19 +61,19 @@ namespace NTS_Reader_CS.xml
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
             calYear = 2021; //테스트 년도
 
-            string emp_no = ""; ;            
+            string emp_no = ""; ;
 
-            foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
-                {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
-
-            //전체합계컬럼 초기화
-            executeSql($@"                                      
+                /* foreach (var 인별 in entity.인별)
+                 {
+                     Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                     if (resultMap.Count > 0)
+                     {
+                         emp_no = resultMap["EMP_NO"].ToString(); //사번
+                     }
+                 }*/
+            emp_no = NTS_Reader.emp_no;
+                //전체합계컬럼 초기화
+                executeSql($@"                                      
                                 UPDATE QE020MS
                                 SET YCAL_SPCD_4_4_I_REFN_AMT = 0        
                                    ,YCAL_SPCD_4_3_I_REFN_AMT = 0        

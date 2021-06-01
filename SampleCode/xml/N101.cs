@@ -59,16 +59,16 @@ namespace NTS_Reader_CS.xml
             int 장기집합투자증권저축_전체합계 = 0;
             int 시퀀스 = 0;
 
-            foreach (var 인별 in entity.인별)
-            {
-                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                if (resultMap.Count > 0)
-                {
-                    emp_no = resultMap["EMP_NO"].ToString(); //사번
-                }
-            }
-
-            //장기집합투자증권 상세내역 삭제 및 초기화
+           /*foreach (var 인별 in entity.인별)
+               {
+                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                    if (resultMap.Count > 0)
+                    {
+                        emp_no = resultMap["EMP_NO"].ToString(); //사번
+                    }
+             }*/
+            emp_no = NTS_Reader.emp_no;
+                //장기집합투자증권 상세내역 삭제 및 초기화
             executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and ANNU_RENO ='51' ");
 
             //시퀀스 번호가져오기

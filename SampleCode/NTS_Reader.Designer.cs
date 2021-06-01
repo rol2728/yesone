@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.grpPdf = new System.Windows.Forms.GroupBox();
+            this.lb_결과 = new System.Windows.Forms.Label();
             this.tb_empNo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnUtf8 = new System.Windows.Forms.Button();
             this.btnPdf = new System.Windows.Forms.Button();
             this.txtPdf = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtUtf8 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnUtf8 = new System.Windows.Forms.Button();
-            this.lb_결과 = new System.Windows.Forms.Label();
             this.grpPdf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -57,6 +57,15 @@
             this.grpPdf.TabIndex = 0;
             this.grpPdf.TabStop = false;
             // 
+            // lb_결과
+            // 
+            this.lb_결과.AutoSize = true;
+            this.lb_결과.Location = new System.Drawing.Point(28, 125);
+            this.lb_결과.Name = "lb_결과";
+            this.lb_결과.Size = new System.Drawing.Size(53, 12);
+            this.lb_결과.TabIndex = 6;
+            this.lb_결과.Text = "결과문자";
+            // 
             // tb_empNo
             // 
             this.tb_empNo.BackColor = System.Drawing.Color.White;
@@ -65,7 +74,7 @@
             this.tb_empNo.ReadOnly = true;
             this.tb_empNo.Size = new System.Drawing.Size(68, 21);
             this.tb_empNo.TabIndex = 4;
-            this.tb_empNo.Text = "10110007";
+            this.tb_empNo.Text = "10110006";
             // 
             // label2
             // 
@@ -75,6 +84,16 @@
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "사번";
+            // 
+            // btnUtf8
+            // 
+            this.btnUtf8.Image = global::NTS_Reader_CS.Properties.Resources.upload1;
+            this.btnUtf8.Location = new System.Drawing.Point(435, 14);
+            this.btnUtf8.Name = "btnUtf8";
+            this.btnUtf8.Size = new System.Drawing.Size(101, 107);
+            this.btnUtf8.TabIndex = 1;
+            this.btnUtf8.UseVisualStyleBackColor = true;
+            this.btnUtf8.Click += new System.EventHandler(this.btnUtf8_Click);
             // 
             // btnPdf
             // 
@@ -124,25 +143,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(253, 191);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            // 
-            // btnUtf8
-            // 
-            this.btnUtf8.Image = global::NTS_Reader_CS.Properties.Resources.upload1;
-            this.btnUtf8.Location = new System.Drawing.Point(435, 14);
-            this.btnUtf8.Name = "btnUtf8";
-            this.btnUtf8.Size = new System.Drawing.Size(101, 107);
-            this.btnUtf8.TabIndex = 1;
-            this.btnUtf8.UseVisualStyleBackColor = true;
-            this.btnUtf8.Click += new System.EventHandler(this.btnUtf8_Click);
-            // 
-            // lb_결과
-            // 
-            this.lb_결과.AutoSize = true;
-            this.lb_결과.Location = new System.Drawing.Point(28, 125);
-            this.lb_결과.Name = "lb_결과";
-            this.lb_결과.Size = new System.Drawing.Size(53, 12);
-            this.lb_결과.TabIndex = 6;
-            this.lb_결과.Text = "결과문자";
             // 
             // NTS_Reader
             // 
