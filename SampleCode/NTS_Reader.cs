@@ -60,8 +60,8 @@ namespace NTS_Reader_CS
             }
             else
             {
-                tb_empNo.Text = "10110006";
-                emp_no = "10110006";
+                tb_empNo.Text = "10110008";
+                emp_no = "10110008";
             }
 
             

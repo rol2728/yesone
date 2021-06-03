@@ -74,19 +74,38 @@ namespace NTS_Reader_CS.xml
                 {
                     개인별합계 = 0;
 
-                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
-
+                    Dictionary<string, object> resultMap = ReadSql($"select YCAL_RERA,YCAL_OBST,TRUNC(MONTHS_BETWEEN(TRUNC(TO_DATE('{calYear}'||'1231'))," +
+                                                                   $" To_date(decode(substr(FN_ZA010MS_04(YCAL_RESI), 7, 1),   " +
+                                                                   $"                                    '1', '19'," +
+                                                                   $"                                    '2', '19'," +
+                                                                   $"                                    '5', '19'," +
+                                                                   $"                                    '6', '19'," +
+                                                                   $"                                    '3', '20'," +
+                                                                   $"                                    '4', '20'," +
+                                                                   $"                                    '7', '20'," +
+                                                                   $"                                    '8', '20' )" +
+                                                                   $"|| substr(FN_ZA010MS_04(YCAL_RESI), 1, 6))) / 12) AGE from QE023DT WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' and ycal_resi = fn_za010ms_03('{인별.resid}')");
 
                     string ycal_rera = "";
                     string ycal_obst = "";
                     string ycal_old_yn = "";
-
+                    string stan_yn = "";//장애경로구분
                     if (resultMap.Count > 0)
                     {
                         ycal_rera = resultMap["YCAL_RERA"].ToString(); //인적구분
                         ycal_obst = resultMap["YCAL_OBST"].ToString() == "1" ? "A" : ""; //장애인공제
-                        ycal_old_yn = resultMap["YCAL_OLD_YN"].ToString() == "1" ? "B" : ""; //경로우대
+                        if (Convert.ToInt32(resultMap["AGE"].ToString())>= 65) { 
+                            ycal_old_yn = "B";
+                        }
+                        if (ycal_obst =="A")
+                        {
+                            stan_yn = "A";
+                        }
+                        else if (ycal_old_yn == "B")
+                          { stan_yn = "B"; }
+
                     }
+                 
                     else if (resultMap.Count==0)
                     {
                         continue;
@@ -102,7 +121,7 @@ namespace NTS_Reader_CS.xml
 
                         executeSql($@"                                      
                                     INSERT INTO QE021MS(YCAL_YEAR, EMP_NO, SEQ_NO,  PROV_RENO, PROV_NAME, PROV_MEDI_CODE, PROV_PAYM, PROV_COUN, FAMI_RERA, FAMI_RESI, HAND_OLD, PROV_BABY_YN, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{ycal_obst}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{stan_yn}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
                               ");
                     }
 
@@ -122,7 +141,8 @@ namespace NTS_Reader_CS.xml
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                  
                          ");
                     }
-                    else if (resultMap["YCAL_OBST"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
+                    // else if (resultMap["YCAL_OBST"].ToString() == "1" || resultMap["YCAL_OLD_YN"].ToString() == "1")
+                    else if (resultMap["YCAL_OBST"].ToString() == "1" || Convert.ToInt32(resultMap["AGE"].ToString()) >= 65)
                     {
                         전체합계1 += 개인별합계;
                         executeSql($@"                                      

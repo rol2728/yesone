@@ -62,20 +62,21 @@ namespace NTS_Reader_CS.xml
                 int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
                 calYear = 2021; //테스트 년도
 
-                string emp_no = ""; ;
+                string emp_no = ""; 
+                emp_no = NTS_Reader.emp_no;
 
                 int 보장성_개인별합계 = 0;
                 int 보장성_전체합계 = 0;
                 int 장애인보장성_개인별합계 = 0;
                 int 장애인보장성_전체합계 = 0;
-
+                
 
                 foreach (var 인별 in entity.인별)
                 {
                     보장성_개인별합계 = 0;
                     장애인보장성_개인별합계 = 0;
 
-                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}'  ");
                     if (resultMap.Count > 0)
                     {
                         emp_no = resultMap["EMP_NO"].ToString(); //사번
