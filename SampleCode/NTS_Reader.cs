@@ -1501,23 +1501,39 @@ namespace NTS_Reader_CS
                     /* -------------------------------- 예외처리 -----------------------------------------*/
                     if (fileSize == -10)
                     {
-                        lb_결과.ForeColor = Color.Red;
-                        lb_결과.Text = "파일이 없거나 손상된 PDF 파일입니다.";
+                        this.Invoke(new Action(
+                            delegate ()
+                            {
+                                lb_결과.ForeColor = Color.Red;
+                                lb_결과.Text = "파일이 없거나 손상된 PDF 파일입니다.";
+                            }));
                     }
                     else if (fileSize == -11)
                     {
-                        lb_결과.ForeColor = Color.Red;
-                        lb_결과.Text = "국세청에서 발급된 전자문서가 아닙니다.";
+                        this.Invoke(new Action(
+                            delegate ()
+                            {
+                                lb_결과.ForeColor = Color.Red;
+                                lb_결과.Text = "국세청에서 발급된 전자문서가 아닙니다.";
+                            }));
                     }
                     else if (fileSize == -13)
                     {
-                        lb_결과.ForeColor = Color.Red;
-                        lb_결과.Text = "추출용 버퍼가 유효하지 않습니다.";
+                        this.Invoke(new Action(
+                           delegate ()
+                           {
+                               lb_결과.ForeColor = Color.Red;
+                               lb_결과.Text = "추출용 버퍼가 유효하지 않습니다.";
+                           }));
                     }
                     else if (fileSize == -200)
                     {
-                        lb_결과.ForeColor = Color.Red;
-                        lb_결과.Text = "비밀번호가 틀립니다.";
+                        this.Invoke(new Action(
+                          delegate ()
+                          {
+                              lb_결과.ForeColor = Color.Red;
+                              lb_결과.Text = "비밀번호가 틀립니다.";
+                          }));
                     }
 
                 });
