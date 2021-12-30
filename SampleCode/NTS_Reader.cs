@@ -1056,7 +1056,7 @@ namespace NTS_Reader_CS
                                         g309.인별[ix].trp_sum = Int32.Parse(sum_data.Element("trp_sum").Value);
                                         g309.인별[ix].isld_sum = Int32.Parse(sum_data.Element("isld_sum").Value);
                                         g309.인별[ix].tot_sum = Int32.Parse(sum_data.Element("tot_sum").Value);
-                                        g309.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_yearsum").Value);
+                                        g309.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_year_sum").Value);
 
                                         //상품별반복
                                         var datas = from data in man.Elements("data")
