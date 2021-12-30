@@ -103,13 +103,14 @@ namespace NTS_Reader_CS.xml
                     {
                         개인별합계 += data.sum;
                         전체합계3 += data.sum;//개인별합계;                       
-                        executeSql($@"                                      
+                            executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT+{개인별합계}
                                        ,YCAL_EDUC_GUBUN=3
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                    
                          ");
-                    }
+                           
+                        }
                     //대학교
                     else if (data.edu_tp == "5" || data.edu_tp == "6")
                     {

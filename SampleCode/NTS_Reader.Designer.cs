@@ -38,12 +38,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtUtf8 = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_ycalyear = new System.Windows.Forms.TextBox();
             this.grpPdf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // grpPdf
             // 
+            this.grpPdf.Controls.Add(this.tb_ycalyear);
+            this.grpPdf.Controls.Add(this.label3);
             this.grpPdf.Controls.Add(this.lb_결과);
             this.grpPdf.Controls.Add(this.tb_empNo);
             this.grpPdf.Controls.Add(this.label2);
@@ -69,7 +73,7 @@
             // tb_empNo
             // 
             this.tb_empNo.BackColor = System.Drawing.Color.White;
-            this.tb_empNo.Location = new System.Drawing.Point(100, 56);
+            this.tb_empNo.Location = new System.Drawing.Point(100, 76);
             this.tb_empNo.Name = "tb_empNo";
             this.tb_empNo.ReadOnly = true;
             this.tb_empNo.Size = new System.Drawing.Size(68, 21);
@@ -79,11 +83,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 62);
+            this.label2.Location = new System.Drawing.Point(26, 79);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.Size = new System.Drawing.Size(49, 12);
             this.label2.TabIndex = 3;
-            this.label2.Text = "사번";
+            this.label2.Text = "사     번";
             // 
             // btnUtf8
             // 
@@ -144,6 +148,25 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "정산연도";
+            // 
+            // tb_ycalyear
+            // 
+            this.tb_ycalyear.BackColor = System.Drawing.Color.White;
+            this.tb_ycalyear.Location = new System.Drawing.Point(100, 47);
+            this.tb_ycalyear.Name = "tb_ycalyear";
+            this.tb_ycalyear.ReadOnly = true;
+            this.tb_ycalyear.Size = new System.Drawing.Size(68, 21);
+            this.tb_ycalyear.TabIndex = 8;
+            this.tb_ycalyear.Text = "2021";
+            // 
             // NTS_Reader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -177,6 +200,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RichTextBox txtUtf8;
         private System.Windows.Forms.Label lb_결과;
+        private System.Windows.Forms.TextBox tb_ycalyear;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -49,7 +49,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
 
@@ -96,7 +96,7 @@ namespace NTS_Reader_CS.xml
                                                         ANNU_NAME, ANNU_ACCO, ANNU_YEAR, ANNU_AMT, ANNU_DTRG_AMT, 
                                                         U_EMP_NO, U_DATE, U_IP,ANNU_INVE_YEAR, ANNU_INVE_GUBUN)
                                            VALUES('{calYear}', {emp_no},{시퀀스},'61', '{data.com_cd}',
-                                                  '{data.trade_nm}','{data.secu_no}','', {data.sum}, 0, '국세청', sysdate, '10.10.11.104',{data.reg_dt},'1' )
+                                                  '{data.trade_nm}','{data.secu_no}','', {data.sum}, 0, '국세청', sysdate, '10.10.11.104',{data.reg_dt},'3' )
                               ");
                         //  시퀀스 += 1;
                     }

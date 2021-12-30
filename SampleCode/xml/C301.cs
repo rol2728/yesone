@@ -75,7 +75,7 @@ namespace NTS_Reader_CS.xml
                 //개인별 합계
                 executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT =  YCAL_EDUC_AMT+{개인별합계}
                                        ,YCAL_EDUC_GUBUN = '3'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                     ");
@@ -84,7 +84,7 @@ namespace NTS_Reader_CS.xml
             //전체 합계
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SCH_AMT = {전체합계}
+                                    SET YCAL_SPCD_3_SCH_AMT = YCAL_SPCD_3_SCH_AMT+ {전체합계}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
         }

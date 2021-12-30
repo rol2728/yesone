@@ -115,13 +115,13 @@ namespace NTS_Reader_CS.xml
                     {
                         시퀀스 += 1;
                         개인별합계 += data.sum;
-                        string 난임여부 = data.dat_cd == "G0034" ? "Y" : "N";
+                       // string 난임여부 = data.dat_cd == "G0034" ? "Y" : "N";
 
                         //의료비 테이블 입력 (QE021MS)
 
                         executeSql($@"                                      
                                     INSERT INTO QE021MS(YCAL_YEAR, EMP_NO, SEQ_NO,  PROV_RENO, PROV_NAME, PROV_MEDI_CODE, PROV_PAYM, PROV_COUN, FAMI_RERA, FAMI_RESI, HAND_OLD, PROV_BABY_YN, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{stan_yn}', '{난임여부}', '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{stan_yn}', 'N', '{emp_no}', sysdate, '10.10.11.104')
                               ");
                     }
 

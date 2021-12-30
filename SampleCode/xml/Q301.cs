@@ -5,7 +5,7 @@ using NTS_Reader_CS.db;
 
 namespace NTS_Reader_CS.xml
 {
-    class Q101 : Dbconn //벤처기업투자신탁
+    class Q301 : Dbconn //벤처기업투자신탁(전전년도 납입분)
     {
         public String form_cd { get; set; } // 서식코드
         public 인별반복[] 인별;
@@ -30,20 +30,20 @@ namespace NTS_Reader_CS.xml
             public string com_cd { get; set; } //금융기관코드
             public int sum { get; set; } //연간합계액
 
-            public Q101M[] 월별;
+            public Q301M[] 월별;
         }
 
-        public struct Q101M
+        public struct Q301M
         {
             public int amt { get; set; } //월별납입금액
             public string mm { get; set; } //납입월         
         }
 
-        public void Execute(Q101 entity)
+        public void Execute(Q301 entity)
         {
-           try
-            { 
-            if (entity.인별 == null)
+          try
+           { 
+            if(entity.인별 == null)
             {
                 return;
             }
@@ -56,17 +56,18 @@ namespace NTS_Reader_CS.xml
             int 벤처기업투자신탁_전체합계 = 0;
             int 시퀀스 = 0;
 
-                /* foreach (var 인별 in entity.인별)
-                 {
-                     Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
-                     if (resultMap.Count > 0)
-                     {
-                         emp_no = resultMap["EMP_NO"].ToString(); //사번
-                     }
-                 }*/
-             emp_no = NTS_Reader.emp_no;
+           /* foreach (var 인별 in entity.인별)
+            {
+                Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                if (resultMap.Count > 0)
+                {
+                    emp_no = resultMap["EMP_NO"].ToString(); //사번
+                }
+            }*/
+           emp_no = NTS_Reader.emp_no;
+
                 //벤처기업투자신탁
-              executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear} and ANNU_RENO ='61' ");
+                executeSql($@" DELETE FROM QE024MS WHERE EMP_NO='{emp_no}' and YCAL_YEAR={calYear-2} and ANNU_RENO ='61' ");
 
             //시퀀스 번호가져오기
             Dictionary<string, object> resultMap2 = ReadSql($"select MAX(NVL(SEQ_NO,0))+1 AS SEQ_NO from QE024MS WHERE emp_no = '{emp_no}' and ycal_year = '{calYear}' GROUP BY EMP_NO ");
@@ -80,11 +81,11 @@ namespace NTS_Reader_CS.xml
             }
             foreach (var 인별 in entity.인별)
             {
-             //   벤처기업투자신탁_전체합계 = 0;
+                //   벤처기업투자신탁_전체합계 = 0;
 
                 foreach (var data in 인별.상품)
                 {
-                    if (data.dat_cd == "G0035" && data.reg_dt == Convert.ToString(calYear))
+                    if (data.dat_cd == "G0035" && data.reg_dt ==Convert.ToString(calYear - 2))
                     {
                         벤처기업투자신탁_전체합계 += data.sum;
 
@@ -101,15 +102,16 @@ namespace NTS_Reader_CS.xml
                     }
                     시퀀스 += 1;
                 }
-                
+
             }
 
             //전체 합계금액 수정
             //3천만원이하
             if (벤처기업투자신탁_전체합계 <= 30000000)
-            { executeSql($@"                                      
+            {
+                executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_3_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_8_AMT = {벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
@@ -118,7 +120,7 @@ namespace NTS_Reader_CS.xml
             {
                 executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_2_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_7_AMT = {벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
@@ -127,16 +129,16 @@ namespace NTS_Reader_CS.xml
             {
                 executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_1_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_6_AMT = {벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
             }
         }
-            catch (Exception ex)
+     catch (Exception ex)
             {
-                throw new Exception("당해벤처기업투자신탁[Q101] 처리 중 오류가 발생하였습니다.");
+                throw new Exception("전년도 벤처기업투자신탁[Q301]  처리 중 오류가 발생하였습니다.");
             }
-        }
+      }
     }
 }

@@ -12,8 +12,8 @@ namespace NTS_Reader_CS.xml
 
         public struct 인별반복
         {
-            public string resid { get; set; } //수익자 주민등록번호
-            public string name { get; set; } //수익자 성명
+            public string resid { get; set; } //피보험자 주민등록번호
+            public string name { get; set; } //피보험자 성명
             public 상품별반복[] 상품;
         }
 
@@ -60,7 +60,8 @@ namespace NTS_Reader_CS.xml
                 {
                     개인별합계 = 0;
 
-                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                    // Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}' and YCAL_RERA='0' ");
+                    Dictionary<string, object> resultMap = ReadSql($"select * from QE023DT WHERE ycal_resi = fn_za010ms_03('{인별.resid}') and ycal_year = '{calYear}'  ");//수익자로 변경되었음 2021
                     if (resultMap.Count > 0)
                     {
                         emp_no = resultMap["EMP_NO"].ToString(); //사번

@@ -17,6 +17,7 @@ namespace NTS_Reader_CS
     {
 
         public static string emp_no = "";
+        public static int ycal_year = DateTime.Now.Year - 1;
 
         /*---------------------  클래스 초기화 -----------------*/
 
@@ -29,11 +30,17 @@ namespace NTS_Reader_CS
         C401 c401 = new C401();
         D101 d101 = new D101();
         E102 e102 = new E102();
+        E103 e103 = new E103(); //2021년 추가
         F102 f102 = new F102();
+        F103 f103 = new F103(); //2021년 추가
         G108 g108 = new G108();
+        G109 g109 = new G109(); //2021년 추가
         G208 g208 = new G208();
+        G209 g209 = new G209(); //2021년 추가
         G308 g308 = new G308();
+        G309 g309 = new G309(); //2021년 추가
         G408 g408 = new G408();
+        G409 g409 = new G409();  //2021년 추가
         J101 j101 = new J101();
         J203 j203 = new J203();
         J301 j301 = new J301();
@@ -46,6 +53,7 @@ namespace NTS_Reader_CS
         P102 p102 = new P102();
         Q101 q101 = new Q101();
         Q201 q201 = new Q201();
+        Q301 q301 = new Q301(); //2021년 추가
 
 
         public NTS_Reader()
@@ -57,11 +65,13 @@ namespace NTS_Reader_CS
             {
                 tb_empNo.Text = strArg[1];
                 emp_no = strArg[1];
+                ycal_year = Convert.ToInt32(tb_ycalyear.Text);
             }
             else
             {
-                tb_empNo.Text = "10110008";
-                emp_no = "10110008";
+                tb_empNo.Text = "10110007";
+                emp_no = "10110007";
+                ycal_year = 2021;
             }
 
             
@@ -156,7 +166,7 @@ namespace NTS_Reader_CS
         /// <param name="e"></param>
         private void btnUtf8_Click(object sender, EventArgs e)
         {
-
+          
             LoadingForm f = new LoadingForm();            
             f.StartPosition = FormStartPosition.CenterParent;
 
@@ -199,7 +209,7 @@ namespace NTS_Reader_CS
                             var form = result.SingleOrDefault();
                             string att_year = form.Element("att_year").Value;
 
-                            if (att_year != "2020")
+                            if (att_year != "2021")
                             {
                                 MessageBox.Show("해당 정산년도가 아닙니다.");
                             }
@@ -594,6 +604,52 @@ namespace NTS_Reader_CS
                                     }
 
                                 }
+                                /* --------------------2021 연금저축 ------------------*/
+                                else if (form_cd.Contains("E103"))
+                                {
+
+                                    e103.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    e103.인별 = new E103.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        e103.인별[ix].resid = man.Attribute("resid").Value;
+                                        e103.인별[ix].name = man.Attribute("name").Value;
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+
+                                        e103.인별[ix].상품 = new E103.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            e103.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            e103.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            e103.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            e103.인별[ix].상품[j].acc_no = data.Attribute("acc_no").Value;
+
+                                            e103.인별[ix].상품[j].com_cd = data.Element("com_cd").Value;
+                                            e103.인별[ix].상품[j].ann_tot_amt = Int32.Parse(data.Element("ann_tot_amt").Value);
+                                            e103.인별[ix].상품[j].tax_year_amt = Int32.Parse(data.Element("tax_year_amt").Value);
+                                            e103.인별[ix].상품[j].ddct_bs_ass_amt = Int32.Parse(data.Element("ddct_bs_ass_amt").Value);
+                                            e103.인별[ix].상품[j].isa_ddct_bs_ass_amt = Int32.Parse(data.Element("isa_ddct_bs_ass_amt").Value);
+
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+
+                                }
                                 /* -------------------- 퇴직연금 ------------------*/
                                 else if (form_cd.Contains("F102"))
                                 {
@@ -632,6 +688,50 @@ namespace NTS_Reader_CS
                                             f102.인별[ix].상품[j].ann_tot_amt = Int32.Parse(data.Element("ann_tot_amt").Value);
                                             f102.인별[ix].상품[j].tax_year_amt = Int32.Parse(data.Element("tax_year_amt").Value);
                                             f102.인별[ix].상품[j].ddct_bs_ass_amt = Int32.Parse(data.Element("ddct_bs_ass_amt").Value);
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+                                }
+                                /* -------------------- 2021퇴직연금 ------------------*/
+                                else if (form_cd.Contains("F103"))
+                                {
+                                    f103.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    f103.인별 = new F103.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        f103.인별[ix].resid = man.Attribute("resid").Value;
+                                        f103.인별[ix].name = man.Attribute("name").Value;
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+
+                                        f103.인별[ix].상품 = new F103.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            f103.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            f103.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            f103.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            f103.인별[ix].상품[j].acc_no = data.Attribute("acc_no").Value;
+
+                                            f103.인별[ix].상품[j].com_cd = data.Element("com_cd").Value;
+                                            f103.인별[ix].상품[j].pension_cd = data.Element("pension_cd").Value;
+                                            f103.인별[ix].상품[j].ann_tot_amt = Int32.Parse(data.Element("ann_tot_amt").Value);
+                                            f103.인별[ix].상품[j].tax_year_amt = Int32.Parse(data.Element("tax_year_amt").Value);
+                                            f103.인별[ix].상품[j].ddct_bs_ass_amt = Int32.Parse(data.Element("ddct_bs_ass_amt").Value);
+                                            f103.인별[ix].상품[j].isa_ddct_bs_ass_amt = Int32.Parse(data.Element("isa_ddct_bs_ass_amt").Value);
                                             j++;
                                         }
                                         ix++;
@@ -703,6 +803,58 @@ namespace NTS_Reader_CS
 
 
                                 }
+                                /* -------------------- 신용카드(2021년 귀속) ------------------*/
+                                else if (form_cd.Contains("G109"))
+                                {
+                                    g109.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    g109.인별 = new G109.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        g109.인별[ix].resid = man.Attribute("resid").Value;
+                                        g109.인별[ix].name = man.Attribute("name").Value;
+
+                                        //합계 sum_data
+
+                                        var sum_data = man.Element("sum_data");
+                                        g109.인별[ix].gnrl_sum = Int32.Parse(sum_data.Element("gnrl_sum").Value);
+                                        g109.인별[ix].tdmr_sum = Int32.Parse(sum_data.Element("tdmr_sum").Value);
+                                        g109.인별[ix].trp_sum = Int32.Parse(sum_data.Element("trp_sum").Value);
+                                        g109.인별[ix].isld_sum = Int32.Parse(sum_data.Element("isld_sum").Value);
+                                        g109.인별[ix].tot_sum = Int32.Parse(sum_data.Element("tot_sum").Value);
+                                        g109.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_year_sum").Value);
+                                        
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+                                        g109.인별[ix].상품 = new G109.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            g109.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            g109.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            g109.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            g109.인별[ix].상품[j].use_place_cd = data.Attribute("use_place_cd").Value;
+
+                                            g109.인별[ix].상품[j].sum = Int32.Parse(data.Element("sum").Value);
+
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+
+
+                                }
                                 /* -------------------- 현금영수증(2020년 귀속) ------------------*/
                                 else if (form_cd.Contains("G208"))
                                 {
@@ -765,6 +917,55 @@ namespace NTS_Reader_CS
                                         ix++;
                                     }
                                 }
+                                /* -------------------- 현금영수증(2021년 귀속) ------------------*/
+                                else if (form_cd.Contains("G209"))
+                                {
+                                    g209.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    g209.인별 = new G209.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        g209.인별[ix].resid = man.Attribute("resid").Value;
+                                        g209.인별[ix].name = man.Attribute("name").Value;
+
+                                        //합계 sum_data
+
+                                        var sum_data = man.Element("sum_data");
+                                        g209.인별[ix].gnrl_sum = Int32.Parse(sum_data.Element("gnrl_sum").Value);
+                                        g209.인별[ix].tdmr_sum = Int32.Parse(sum_data.Element("tdmr_sum").Value);
+                                        g209.인별[ix].trp_sum = Int32.Parse(sum_data.Element("trp_sum").Value);
+                                        g209.인별[ix].isld_sum = Int32.Parse(sum_data.Element("isld_sum").Value);
+                                        g209.인별[ix].tot_sum = Int32.Parse(sum_data.Element("tot_sum").Value);
+                                        g109.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_year_sum").Value);
+
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+                                        g209.인별[ix].상품 = new G209.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            g209.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            g209.인별[ix].상품[j].use_place_cd = data.Attribute("use_place_cd").Value;
+
+                                            g209.인별[ix].상품[j].sum = Int32.Parse(data.Element("sum").Value);
+
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+                                }
+
                                 /* -------------------- 직불카드(2020년 귀속) ------------------*/
                                 else if (form_cd.Contains("G308"))
                                 {
@@ -829,6 +1030,56 @@ namespace NTS_Reader_CS
                                         ix++;
                                     }
                                 }
+                                /* -------------------- 직불카드(2021년 귀속) ------------------*/
+                                else if (form_cd.Contains("G309"))
+                                {
+                                    g309.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    g309.인별 = new G309.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        g309.인별[ix].resid = man.Attribute("resid").Value;
+                                        g309.인별[ix].name = man.Attribute("name").Value;
+
+                                        //합계 sum_data
+
+                                        var sum_data = man.Element("sum_data");
+                                        g309.인별[ix].gnrl_sum = Int32.Parse(sum_data.Element("gnrl_sum").Value);
+                                        g309.인별[ix].tdmr_sum = Int32.Parse(sum_data.Element("tdmr_sum").Value);
+                                        g309.인별[ix].trp_sum = Int32.Parse(sum_data.Element("trp_sum").Value);
+                                        g309.인별[ix].isld_sum = Int32.Parse(sum_data.Element("isld_sum").Value);
+                                        g309.인별[ix].tot_sum = Int32.Parse(sum_data.Element("tot_sum").Value);
+                                        g309.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_yearsum").Value);
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+                                        g309.인별[ix].상품 = new G309.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            g309.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            g309.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            g309.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            g309.인별[ix].상품[j].use_place_cd = data.Attribute("use_place_cd").Value;
+
+                                            g309.인별[ix].상품[j].sum = Int32.Parse(data.Element("sum").Value);
+
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+                                }
+
                                 /* -------------------- 제로페이(2020년 귀속) ------------------*/
                                 else if (form_cd.Contains("G408"))
                                 {
@@ -893,6 +1144,57 @@ namespace NTS_Reader_CS
                                         ix++;
                                     }
                                 }
+                                /* -------------------- 제로페이(2021년 귀속) ------------------*/
+                                else if (form_cd.Contains("G409"))
+                                {
+                                    g409.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    g409.인별 = new G409.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        g409.인별[ix].resid = man.Attribute("resid").Value;
+                                        g409.인별[ix].name = man.Attribute("name").Value;
+
+                                        //합계 sum_data
+
+                                        var sum_data = man.Element("sum_data");
+                                        g409.인별[ix].gnrl_sum = Int32.Parse(sum_data.Element("gnrl_sum").Value);
+                                        g409.인별[ix].tdmr_sum = Int32.Parse(sum_data.Element("tdmr_sum").Value);
+                                        g409.인별[ix].trp_sum = Int32.Parse(sum_data.Element("trp_sum").Value);
+                                        g409.인별[ix].isld_sum = Int32.Parse(sum_data.Element("isld_sum").Value);
+                                        g409.인별[ix].tot_sum = Int32.Parse(sum_data.Element("tot_sum").Value);
+                                        g409.인별[ix].tot_pre_year_sum = Int32.Parse(sum_data.Element("tot_pre_year_sum").Value);
+
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+                                        g409.인별[ix].상품 = new G409.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            g409.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            g409.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            g409.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            g409.인별[ix].상품[j].use_place_cd = data.Attribute("use_place_cd").Value;
+
+                                            g409.인별[ix].상품[j].sum = Int32.Parse(data.Element("sum").Value);
+
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+                                }
+
                                 /* -------------------- 주택임차차입금 원리금상환액 ------------------*/
                                 else if (form_cd.Contains("J101"))
                                 {
@@ -1413,6 +1715,49 @@ namespace NTS_Reader_CS
                                         ix++;
                                     }
                                 }
+                                /* -------------------- 벤처기업투자신탁(전전년도 납입분 2021년 추가) ------------------*/
+                                else if (form_cd.Contains("Q301"))
+                                {
+                                    q301.form_cd = form_cd;
+
+                                    // 인별반복
+                                    var mans = from man in frm.Elements("man")
+                                               select man;
+
+                                    q301.인별 = new Q301.인별반복[mans.Count()];
+
+                                    int ix = 0;
+                                    foreach (var man in mans)
+                                    {
+
+                                        q301.인별[ix].resid = man.Attribute("resid").Value;
+                                        q201.인별[ix].name = man.Attribute("name").Value;
+
+                                        //상품별반복
+                                        var datas = from data in man.Elements("data")
+                                                    select data;
+
+
+                                        q301.인별[ix].상품 = new Q301.상품별반복[datas.Count()];
+
+                                        int j = 0;
+                                        foreach (var data in datas)
+                                        {
+                                            q301.인별[ix].상품[j].dat_cd = data.Attribute("dat_cd").Value;
+                                            q301.인별[ix].상품[j].busnid = data.Attribute("busnid").Value;
+                                            q301.인별[ix].상품[j].trade_nm = data.Attribute("trade_nm").Value;
+                                            q301.인별[ix].상품[j].secu_no = data.Attribute("secu_no").Value;
+
+                                            q301.인별[ix].상품[j].fund_nm = data.Element("fund_nm").Value;
+                                            q301.인별[ix].상품[j].reg_dt = data.Element("reg_dt").Value;
+                                            q301.인별[ix].상품[j].vnt_asct_cl_cd = data.Element("vnt_asct_cl_cd").Value;
+                                            q301.인별[ix].상품[j].com_cd = data.Element("com_cd").Value;
+                                            q301.인별[ix].상품[j].sum = Int32.Parse(data.Element("sum").Value);
+                                            j++;
+                                        }
+                                        ix++;
+                                    }
+                                }
                                 /* -------------------- 기타 ------------------*/
                                 else
                                 {
@@ -1425,7 +1770,7 @@ namespace NTS_Reader_CS
                             /* -----------------------------  반복문 폼 로딩 처리 끝 ----------------------------------------*/
 
                         }
-
+                      
 
                         /* ------------------------------- 데이터베이스 입력처리 -----------------------------*/
 
@@ -1464,9 +1809,9 @@ namespace NTS_Reader_CS
                             c102.Execute(c102);
                             c202.Execute(c202); c301.Execute(c301); c401.Execute(c401);
                             d101.Execute(d101);
-                            e102.Execute(e102);
-                            f102.Execute(f102);
-                            g108.Execute(g108);
+                            e102.Execute(e102); e103.Execute(e103);
+                            f102.Execute(f102); f103.Execute(f103);
+                            g108.Execute(g108); g109.Execute(g109);
                             g208.Execute(g208);
                             g308.Execute(g308);
                             g408.Execute(g408);
@@ -1478,6 +1823,7 @@ namespace NTS_Reader_CS
                             p102.Execute(p102);
                             q101.Execute(q101);
                             q201.Execute(q201);
+                            q301.Execute(q301);
 
                             this.Invoke(new Action(
                             delegate ()

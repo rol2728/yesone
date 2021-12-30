@@ -37,3 +37,7 @@ D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.exe
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.pdb
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.csprojAssemblyReference.cache
 D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.LoadingForm.resources
+D:\yesone\SampleCode\bin\x86\Debug\NTS_Reader_CS.exe.manifest
+D:\yesone\SampleCode\bin\x86\Debug\NTS_Reader_CS.application
+D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.exe.manifest
+D:\yesone\SampleCode\obj\x86\Debug\NTS_Reader_CS.application
