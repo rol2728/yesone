@@ -46,9 +46,9 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year;  //테스트 년도
 
-            string emp_no = ""; ;
+                string emp_no = ""; 
 
             int 개인별합계 = 0;
             int 장애_개인별합계 = 0;
@@ -109,7 +109,7 @@ namespace NTS_Reader_CS.xml
                                        ,YCAL_EDUC_GUBUN=3
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                    
                          ");
-                           
+                            
                         }
                     //대학교
                     else if (data.edu_tp == "5" || data.edu_tp == "6")
@@ -126,6 +126,7 @@ namespace NTS_Reader_CS.xml
                     //장애
                     else if (data.edu_tp == "J" || data.edu_tp == "K" || data.edu_tp == "H")
                     {
+                           
                         장애_개인별합계 += data.sum;
                         전체합계5 += data.sum;
                         executeSql($@"                                      
