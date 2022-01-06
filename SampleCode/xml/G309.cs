@@ -118,16 +118,16 @@ namespace NTS_Reader_CS.xml
                 //개인별
                 executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_DEBT_AMT = YCAL_DEBT_AMT + {인별.gnrl_sum} 
-                                       ,YCAL_MART_AMT = YCAL_MART_AMT + {인별.tdmr_sum}                                   
-                                       ,YCAL_TRAN_AMT = YCAL_TRAN_AMT + {인별.trp_sum}       
-                                       ,YCAL_BOOK_AMT = YCAL_BOOK_AMT + {인별.isld_sum}   
+                                    SET YCAL_DEBT_AMT = NVL(YCAL_DEBT_AMT,0) + {인별.gnrl_sum}
+                                       ,YCAL_MART_AMT = NVL(YCAL_MART_AMT,0) + {인별.tdmr_sum}                                   
+                                       ,YCAL_TRAN_AMT = NVL(YCAL_TRAN_AMT,0) + {인별.trp_sum}       
+                                       ,YCAL_BOOK_AMT = NVL(YCAL_BOOK_AMT,0) + {인별.isld_sum}   
                                        ,YCAL_CARD_2020_AMT=YCAL_CARD_2020_AMT+{인별.tot_pre_year_sum}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                     ");
             }
-        }
-      catch (Exception ex)
+            }   
+            catch (Exception ex)
             {
                 throw new Exception("직불카드등[G309] 처리 중 오류가 발생하였습니다.");
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NTS_Reader_CS.db;
 
-namespace NTS_Reader_CS.xml
+namespace NTS_Reader_CS.xml //교복구입비
 {
     class C301 : Dbconn
     {
@@ -45,7 +45,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
 
@@ -67,7 +67,13 @@ namespace NTS_Reader_CS.xml
                 개인별합계 = 0;
 
                 foreach (var data in 인별.기관)
-                {
+                {  
+                   //교복구입한도 체크 50만원
+                   if (data.sum >= 500000)
+                     {
+                       data.sum =500000
+                        }
+
                     개인별합계 += data.sum;
                     전체합계 += data.sum;                   
                 }
@@ -75,7 +81,7 @@ namespace NTS_Reader_CS.xml
                 //개인별 합계
                 executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT =  YCAL_EDUC_AMT+{개인별합계}
+                                    SET YCAL_EDUC_AMT =  NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN = '3'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                     ");
@@ -84,7 +90,7 @@ namespace NTS_Reader_CS.xml
             //전체 합계
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SCH_AMT = YCAL_SPCD_3_SCH_AMT+ {전체합계}
+                                    SET YCAL_SPCD_3_SCH_AMT = NVL(YCAL_SPCD_3_SCH_AMT,0)+ {전체합계}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
         }

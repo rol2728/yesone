@@ -95,7 +95,7 @@ namespace NTS_Reader_CS.xml
                                                         ANNU_NAME, ANNU_ACCO, ANNU_YEAR, ANNU_AMT, ANNU_DTRG_AMT, 
                                                         U_EMP_NO, U_DATE, U_IP,ANNU_INVE_YEAR, ANNU_INVE_GUBUN)
                                            VALUES('{calYear}', {emp_no},{시퀀스},'61', '{data.com_cd}',
-                                                  '{data.trade_nm}','{data.secu_no}','', {data.sum}, 0, '국세청', sysdate, '10.10.11.104',{data.reg_dt},'3' )
+                                                  '{data.trade_nm}','{data.secu_no}','', {data.sum}, 0,  {emp_no}, sysdate, '{Util.getIP()}' ,{data.reg_dt},'3' )
                               ");
                         //  시퀀스 += 1;
                     }
@@ -109,8 +109,9 @@ namespace NTS_Reader_CS.xml
             if (벤처기업투자신탁_전체합계 <= 30000000)
             { executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_3_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_16_3_AMT = nvl(YCAL_NTXD_3_16_3_AMT,0)+{벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
+                                           , U_IP ='{Util.getIP()}'
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
             }
@@ -118,8 +119,9 @@ namespace NTS_Reader_CS.xml
             {
                 executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_2_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_16_2_AMT = nvl(YCAL_NTXD_3_16_2_AMT,0)+{벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
+                                           , U_IP ='{Util.getIP()}'
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
             }
@@ -127,7 +129,7 @@ namespace NTS_Reader_CS.xml
             {
                 executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_3_16_1_AMT = {벤처기업투자신탁_전체합계}
+                                       SET YCAL_NTXD_3_16_1_AMT = nvl(YCAL_NTXD_3_16_1_AMT,0)+{벤처기업투자신탁_전체합계}
                                            , U_DATE =SYSDATE
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");

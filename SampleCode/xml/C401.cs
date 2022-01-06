@@ -45,7 +45,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
 
@@ -79,7 +79,7 @@ namespace NTS_Reader_CS.xml
                     //개인별합계
                     executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT = NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN = '1'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                          ");
@@ -95,7 +95,7 @@ namespace NTS_Reader_CS.xml
                     //개인별합계
                     executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT+{개인별합계}
                                        ,YCAL_EDUC_GUBUN = '4'
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                 
                          ");
@@ -105,18 +105,18 @@ namespace NTS_Reader_CS.xml
             //본인_전체합계
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SELF_AMT = {본인_전체합계}                                       
+                                    SET YCAL_SPCD_3_SELF_AMT = nvl(YCAL_SPCD_3_SELF_AMT,0)+ {본인_전체합계}                                       
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                          ");
 
             //본인외_전체합계
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_UNIV_AMT = {본인외_전체합계}                                       
+                                    SET YCAL_SPCD_3_UNIV_AMT = nvl(YCAL_SPCD_3_UNIV_AMT, 0) +{ 본인외_전체합계}                                   
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                          ");
 
-        }
+            }   
             catch (Exception ex)
             {
                 throw new Exception("학자금대출상환액[C401] 처리 중 오류가 발생하였습니다.");

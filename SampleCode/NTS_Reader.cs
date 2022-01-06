@@ -1778,7 +1778,7 @@ namespace NTS_Reader_CS
                         conn.ConnectionDB("61.81.162.13", "ORAMJ", "MJUSER", "MJUSER");
 
                         int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-                        calYear = 2021; //테스트 년도
+                       // calYear = '2021'; //테스트 년도
 
                         //테이블 초기화
                         // 1. QE024MS
@@ -1812,9 +1812,9 @@ namespace NTS_Reader_CS
                             e102.Execute(e102); e103.Execute(e103);
                             f102.Execute(f102); f103.Execute(f103);
                             g108.Execute(g108); g109.Execute(g109);
-                            g208.Execute(g208);
-                            g308.Execute(g308);
-                            g408.Execute(g408);
+                            g208.Execute(g208); g209.Execute(g209);
+                            g308.Execute(g308); g309.Execute(g309);
+                            g408.Execute(g408); g409.Execute(g409);
                             j101.Execute(j101); j203.Execute(j203); j301.Execute(j301); j401.Execute(j401); j501.Execute(j501);
                             k101.Execute(k101);
                             l102.Execute(l102);

@@ -52,7 +52,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+                calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
             int 전체합계 = 0;            
@@ -78,7 +78,7 @@ namespace NTS_Reader_CS.xml
                     //테이블 입력 (QE027MS)
                     executeSql($@"                                      
                                     INSERT INTO QE027MS(YCAL_YEAR, EMP_NO, SEQ_NO,  MONT_NAME , MONT_RESI_NO, MONT_ADDRESS, MONT_FROM_DATE, MONT_TO_DATE,HOUSE_TYPE, HOUSE_SPACE,MONT_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', '{data.end_dt}', substr('{data.typeCd}',2,1), '{data.area}',{data.sum},'{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.lsor_nm}', '{data.lsor_no}', '{data.adr}', '{data.start_dt}', '{data.end_dt}', substr('{data.typeCd}',2,1), '{data.area}',{data.sum},'{emp_no}', sysdate, '{Util.getIP()}')
                                ");
                     시퀀스++;
                 }
@@ -88,7 +88,7 @@ namespace NTS_Reader_CS.xml
             //전체합계
             executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_6_MONT_AMT = {전체합계}                                       
+                                SET YCAL_SPCD_4_6_MONT_AMT =nvl(YCAL_SPCD_4_6_MONT_AMT,0)+{전체합계}
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 

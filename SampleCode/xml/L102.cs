@@ -53,7 +53,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = "";
             string fam_rera = "";//가족관계
@@ -138,7 +138,7 @@ namespace NTS_Reader_CS.xml
                                            VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.busnid}','{data.trade_nm}','10','1',
                                                   {data.conb_sum},'1','{인별.name}',  fn_za010ms_03('{인별.resid}'),'{fam_rera}', 0,{data.sum},0,0,'{calYear}',
                                                   {data.conb_sum},0,1,1,{data.sbdy_apln_sum},
-                                                  '국세청', sysdate, '10.10.11.104')
+                                                  '국세청', sysdate, '{Util.getIP()}')
                               ");
                         }
                     //종교
@@ -161,7 +161,7 @@ namespace NTS_Reader_CS.xml
                                            VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.busnid}','{data.trade_nm}','41','1',
                                                   {data.conb_sum},'1','{인별.name}',  fn_za010ms_03('{인별.resid}'),'{fam_rera}', 0,{data.sum},0,0,'{calYear}',
                                                   {data.conb_sum},0,1,1,{data.sbdy_apln_sum},
-                                                  '국세청', sysdate, '10.10.11.104')
+                                                  '국세청', sysdate, '{Util.getIP()}')
                               ");
                     }
                     //지정
@@ -184,7 +184,7 @@ namespace NTS_Reader_CS.xml
                                            VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.busnid}','{data.trade_nm}','40','1',
                                                   {data.conb_sum},'1','{인별.name}',  fn_za010ms_03('{인별.resid}'),'{fam_rera}', 0,{data.sum},0,0,'{calYear}',
                                                   {data.conb_sum},0,1,1,{data.sbdy_apln_sum},
-                                                  '국세청', sysdate, '10.10.11.104')
+                                                  '국세청', sysdate, '{Util.getIP()}')
                               ");
                     }
                     //정치자금
@@ -207,7 +207,7 @@ namespace NTS_Reader_CS.xml
                                            VALUES('{calYear}', '{emp_no}',{시퀀스}, '{data.busnid}','{data.trade_nm}','20','1',
                                                   {data.conb_sum},'1','{인별.name}', fn_za010ms_03('{인별.resid}'), '{fam_rera}',0,{data.sum},0,0,'{calYear}',
                                                   {data.conb_sum},0,1,1,{data.sbdy_apln_sum},
-                                                  '국세청', sysdate, '10.10.11.104')
+                                                  '국세청', sysdate, '{Util.getIP()}')
                               ");
                     }
                     시퀀스 += 1;

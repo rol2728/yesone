@@ -117,7 +117,7 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_NTXD_4_1_AMT = YCAL_NTXD_4_1_AMT + {인별.gnrl_sum}
-                                       ,YCAL_NTXD_4_11_AMT = YCAL_NTXD_4_11_AMT + {인별.isld_sum}
+                                       ,YCAL_NTXD_4_8_AMT = YCAL_NTXD_4_8_AMT + {인별.isld_sum}
                                        ,YCAL_NTXD_4_6_AMT = YCAL_NTXD_4_6_AMT + {인별.tdmr_sum}
                                        ,YCAL_NTXD_4_7_AMT = YCAL_NTXD_4_7_AMT + {인별.trp_sum}
                                        ,YCAL_NTXD_4_16_2020_AMT=YCAL_NTXD_4_16_2020_AMT+{인별.tot_pre_year_sum}

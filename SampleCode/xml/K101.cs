@@ -49,7 +49,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
 
@@ -83,7 +83,9 @@ namespace NTS_Reader_CS.xml
             //전체 합계금액 수정
             executeSql($@"                                      
                                      UPDATE QE020MS
-                                       SET YCAL_NTXD_7_AMT = {소상공인_전체합계}
+                                       SET YCAL_NTXD_7_AMT = nvl(YCAL_NTXD_7_AMT,0)+{소상공인_전체합계}
+                                           , U_DATE =SYSDATE
+                                           , U_IP ='{Util.getIP()}'
                                      WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                 
                         ");
 

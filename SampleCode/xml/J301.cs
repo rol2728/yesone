@@ -51,7 +51,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
              
@@ -72,7 +72,10 @@ namespace NTS_Reader_CS.xml
                                 UPDATE QE020MS
                                 SET YCAL_SPCD_4_1_1_AMT = 0        
                                    ,YCAL_SPCD_4_1_2_AMT = 0        
-                                   ,YCAL_SPCD_4_1_3_AMT = 0                                                                           
+                                   ,YCAL_SPCD_4_1_3_AMT = 0 
+                                   , U_DATE =SYSDATE
+                                   , U_IP ='{Util.getIP()}'
+                                   , U_EMP_N0='{emp_no}'
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
@@ -89,7 +92,7 @@ namespace NTS_Reader_CS.xml
                         //전체합계
                         executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_1_2_AMT = YCAL_SPCD_4_1_2_AMT + {data.sum}                                                                                               
+                                SET YCAL_SPCD_4_1_2_AMT = nvl(YCAL_SPCD_4_1_2_AMT,0) + {data.sum}                                                                                               
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
@@ -97,7 +100,7 @@ namespace NTS_Reader_CS.xml
                         //테이블 입력 (QE024MS)
                         executeSql($@"                                      
                                     INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '31', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '31', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '{Util.getIP()}')
                                ");
 
                     }
@@ -106,14 +109,14 @@ namespace NTS_Reader_CS.xml
                         //전체합계
                         executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_1_1_AMT = YCAL_SPCD_4_1_1_AMT + {data.sum}                                                                                               
+                                SET YCAL_SPCD_4_1_1_AMT = nvl(YCAL_SPCD_4_1_1_AMT,0) + {data.sum}                                                                                               
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
                         //테이블 입력 (QE024MS)
                         executeSql($@"                                      
                                     INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '32', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '32', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '{Util.getIP()}')
                                ");
                     }
                     else if (data.saving_gubn == "3")
@@ -121,14 +124,14 @@ namespace NTS_Reader_CS.xml
                         //전체합계
                         executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_SPCD_4_1_3_AMT = YCAL_SPCD_4_1_3_AMT + {data.sum}                                                                                               
+                                SET YCAL_SPCD_4_1_3_AMT = nvl(YCAL_SPCD_4_1_3_AMT,0) + {data.sum}                                                                                               
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 
                         //테이블 입력 (QE024MS)
                         executeSql($@"                                      
                                     INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '34', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '34', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.sum}, '{emp_no}', sysdate, ' {Util.getIP()}')
                                ");
                     }
 

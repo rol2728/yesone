@@ -53,7 +53,7 @@ namespace NTS_Reader_CS.xml
             }
 
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = ""; ;
             int 전체합계 = 0;
@@ -85,7 +85,7 @@ namespace NTS_Reader_CS.xml
                     //테이블 입력 (QE024MS)
                     executeSql($@"                                      
                                     INSERT INTO QE024MS(YCAL_YEAR, EMP_NO, SEQ_NO,  ANNU_RENO, ANNU_CODE, ANNU_NAME, ANNU_ACCO, ANNU_AMT, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.pension_cd}', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.ddct_bs_ass_amt}, '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.pension_cd}', '{data.com_cd}', '{data.trade_nm}', '{data.acc_no}', {data.ddct_bs_ass_amt}, '{emp_no}', sysdate, '{Util.getIP()}')
                                ");
                 }
 
@@ -94,7 +94,10 @@ namespace NTS_Reader_CS.xml
             //전체합계
             executeSql($@"                                      
                                 UPDATE QE020MS
-                                SET YCAL_TAXD_11_RETI_DAMT = {전체합계}                                       
+                                SET YCAL_TAXD_11_RETI_DAMT = {전체합계}
+                                  , U_DATE =SYSDATE
+                                  , U_IP ='{Util.getIP()}'
+                                  , U_EMP_N0='{emp_no}'
                                 WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
 

@@ -104,16 +104,15 @@ namespace NTS_Reader_CS.xml
                     executeSql($@"                                      
                                     UPDATE QE020MS
                                     SET YCAL_NTXD_4_4_AMT = YCAL_NTXD_4_4_AMT + {인별.gnrl_sum}
-                                       ,YCAL_NTXD_4_15_AMT = YCAL_NTXD_4_15_AMT + {인별.isld_sum}
+                                       ,YCAL_NTXD_4_10_AMT = YCAL_NTXD_4_10_AMT + {인별.isld_sum}
                                        ,YCAL_NTXD_4_6_AMT = YCAL_NTXD_4_6_AMT + {인별.tdmr_sum}
                                        ,YCAL_NTXD_4_7_AMT = YCAL_NTXD_4_7_AMT + {인별.trp_sum}
                                        ,YCAL_NTXD_4_16_2020_AMT=YCAL_NTXD_4_16_2020_AMT+{인별.tot_pre_year_sum}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}
                         ");
-
-
-                //개인별
-                executeSql($@"                                      
+                   
+                    //개인별
+                    executeSql($@"                                      
                                     UPDATE QE023DT
                                     SET YCAL_CASH_AMT = YCAL_CASH_AMT + {인별.gnrl_sum} 
                                        ,YCAL_MART_AMT = YCAL_MART_AMT + {인별.tdmr_sum}                                   

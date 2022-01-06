@@ -44,7 +44,7 @@ namespace NTS_Reader_CS.xml
                 }
 
                 int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-                calYear = 2021; //테스트 년도
+                calYear = NTS_Reader.ycal_year; //테스트 년도
 
                 string emp_no = ""; ;
 
@@ -121,7 +121,7 @@ namespace NTS_Reader_CS.xml
 
                         executeSql($@"                                      
                                     INSERT INTO QE021MS(YCAL_YEAR, EMP_NO, SEQ_NO,  PROV_RENO, PROV_NAME, PROV_MEDI_CODE, PROV_PAYM, PROV_COUN, FAMI_RERA, FAMI_RESI, HAND_OLD, PROV_BABY_YN, U_EMP_NO, U_DATE, U_IP)
-                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{stan_yn}', 'N', '{emp_no}', sysdate, '10.10.11.104')
+                                           VALUES('{calYear}', {emp_no},{시퀀스}, '{data.busnid}', '{data.trade_nm}', '1', {data.sum}, 1, '{ycal_rera}', fn_za010ms_03('{인별.resid}'), '{stan_yn}', 'N', '{emp_no}', sysdate, '{Util.getIP()}')
                               ");
                     }
 

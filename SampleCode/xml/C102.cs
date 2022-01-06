@@ -80,7 +80,7 @@ namespace NTS_Reader_CS.xml
                         전체합계1 += data.sum;
                         executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT = NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN=1
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                                                        
                          ");
@@ -93,19 +93,19 @@ namespace NTS_Reader_CS.xml
                         전체합계2 += data.sum;                        
                         executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT =  {개인별합계}
+                                    SET YCAL_EDUC_AMT =  NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN=2
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                      
                          ");
                     }
                     //초중고
-                    else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4")
+                    else if(data.edu_tp == "2" || data.edu_tp == "3" || data.edu_tp == "4" || data.edu_tp == "9")
                     {
                         개인별합계 += data.sum;
                         전체합계3 += data.sum;//개인별합계;                       
                             executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = YCAL_EDUC_AMT+{개인별합계}
+                                    SET YCAL_EDUC_AMT =  NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN=3
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                    
                          ");
@@ -118,7 +118,7 @@ namespace NTS_Reader_CS.xml
                         전체합계4 += data.sum;                        
                         executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC_AMT = {개인별합계}
+                                    SET YCAL_EDUC_AMT =  NVL(YCAL_EDUC_AMT,0)+{개인별합계}
                                        ,YCAL_EDUC_GUBUN=4
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                                                        
                          ");
@@ -131,7 +131,7 @@ namespace NTS_Reader_CS.xml
                         전체합계5 += data.sum;
                         executeSql($@"                                      
                                     UPDATE QE023DT
-                                    SET YCAL_EDUC3_AMT = {장애_개인별합계}
+                                    SET YCAL_EDUC3_AMT =  NVL(YCAL_EDUC3_AMT,0)+{장애_개인별합계}
                                        ,YCAL_EDUC_GUBUN=5
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear} and YCAL_RESI=fn_za010ms_03('{인별.resid}')                                                                       
                          ");
@@ -143,25 +143,25 @@ namespace NTS_Reader_CS.xml
             //본인
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SELF_AMT = {전체합계1}
+                                    SET YCAL_SPCD_3_SELF_AMT = NVL(YCAL_SPCD_3_SELF_AMT,0)+ {전체합계1}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
             //취학전
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_BEFR_AMT = {전체합계2}
+                                    SET YCAL_SPCD_3_BEFR_AMT = NVL(YCAL_SPCD_3_BEFR_AMT,0)+{전체합계2}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
             //초중고
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_SCH_AMT = {전체합계3}
+                                    SET YCAL_SPCD_3_SCH_AMT = NVL(YCAL_SPCD_3_SCH_AMT,0)+{전체합계3}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
             //대학교
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_UNIV_AMT = {전체합계4}
+                                    SET YCAL_SPCD_3_UNIV_AMT = NVL(YCAL_SPCD_3_UNIV_AMT,0)+{전체합계4}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
 
@@ -169,7 +169,7 @@ namespace NTS_Reader_CS.xml
             //장애
             executeSql($@"                                      
                                     UPDATE QE020MS
-                                    SET YCAL_SPCD_3_OBS_AMT = {전체합계5}
+                                    SET YCAL_SPCD_3_OBS_AMT = NVL(YCAL_SPCD_3_OBS_AMT,0)+{전체합계5}
                                     WHERE EMP_NO = '{emp_no}' and YCAL_YEAR={calYear}                                    
                     ");
 

@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NTS_Reader_CS.exe" size="306568">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NTS_Reader_CS.exe" size="313224">
       <assemblyIdentity name="NTS_Reader_CS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xGj+R4K8DLSB2ylHq/6NLW47rgM=</dsig:DigestValue>
+        <dsig:DigestValue>4YN3kb5opydq28pdrgZTVJu+ojg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

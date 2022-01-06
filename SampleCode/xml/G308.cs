@@ -69,7 +69,7 @@ namespace NTS_Reader_CS.xml
                 return;
             }
             int calYear = DateTime.Now.Year - 1; //연말정산 대상연도
-            calYear = 2021; //테스트 년도
+            calYear = NTS_Reader.ycal_year; //테스트 년도
 
             string emp_no = "";
 
