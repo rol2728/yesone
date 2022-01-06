@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using System.Linq;
+using System.IO;
 using NTS_Reader_CS.xml;
 using NTS_Reader_CS.db;
 
@@ -60,6 +61,8 @@ namespace NTS_Reader_CS
         {
             InitializeComponent();
 
+            CheckDll();
+
             string[] strArg = Environment.GetCommandLineArgs();
             if (strArg.Length > 1)
             {
@@ -78,6 +81,34 @@ namespace NTS_Reader_CS
 
             lb_결과.Text = "";
 
+        }
+
+        private void CheckDll()
+        {
+            string path = "";
+            if (Environment.Is64BitOperatingSystem == true)
+            {
+                path = @"C:\Windows\SysWOW64\ExportCustomFile.dll";
+            }
+            else
+            {
+                path = @"C:\Windows\System32\ExportCustomFile.dll";
+            }
+            FileInfo fi = new FileInfo(path);
+
+            if (!fi.Exists)
+            {
+                System.Diagnostics.Process.Start(@"C:\통합시스템\YesoneAPISetup.exe");
+            }
+            else
+            {
+                var version = System.Diagnostics.FileVersionInfo.GetVersionInfo(path).FileVersion;
+
+                if(version.CompareTo("1.0.1.17") < 0)
+                {
+                    System.Diagnostics.Process.Start(@"C:\통합시스템\YesoneAPISetup.exe");
+                }
+            }
         }
 
         private void btnPdf_Click(object sender, EventArgs e)
