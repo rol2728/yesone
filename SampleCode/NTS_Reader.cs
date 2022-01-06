@@ -104,7 +104,7 @@ namespace NTS_Reader_CS
             {
                 var version = System.Diagnostics.FileVersionInfo.GetVersionInfo(path).FileVersion;
 
-                if(version.CompareTo("1.0.1.17") < 0)
+                if(version.CompareTo("1.0.1.16") < 0)
                 {
                     System.Diagnostics.Process.Start(@"C:\통합시스템\YesoneAPISetup.exe");
                 }
